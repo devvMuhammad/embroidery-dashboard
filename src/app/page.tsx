@@ -1,101 +1,237 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import { useEffect, useState } from "react"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+
+// Speedometer component with different states
+const Speedometer = ({
+  value = 0,
+  threshold = 500,
+  operator = "John Doe",
+  machine = "1",
+  head = "8",
+  designNumber = "D-1234",
+}) => {
+  const [isBlinking, setIsBlinking] = useState(false)
+
+  useEffect(() => {
+    // Set blinking effect for zero value
+    if (value === 0) {
+      const interval = setInterval(() => {
+        setIsBlinking((prev) => !prev)
+      }, 500)
+      return () => clearInterval(interval)
+    } else {
+      setIsBlinking(false)
+    }
+  }, [value])
+
+  // Determine color based on value
+  const getColor = () => {
+    if (value === 0) {
+      return isBlinking ? "transparent" : "rgb(239, 68, 68)"
+    }
+    return value < threshold ? "rgb(239, 68, 68)" : "rgb(34, 197, 94)"
+  }
+
+  // Determine status text and style
+  const getStatus = () => {
+    if (value === 0) {
+      return {
+        text: "Stopped Working",
+        color: "text-red-500",
+        blinking: isBlinking ? "opacity-50" : "opacity-100"
+      }
+    } else if (value < threshold) {
+      return {
+        text: "Low Performance",
+        color: "text-red-500",
+        blinking: ""
+      }
+    } else {
+      return {
+        text: "Operational",
+        color: "text-green-500",
+        blinking: ""
+      }
+    }
+  }
+
+  const status = getStatus()
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+    <Card className="h-full">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-lg font-medium flex items-center justify-between">
+          <span>Machine {machine} - {head} Head</span>
+          <span className={`text-sm flex items-center ${status.color} ${status.blinking} transition-opacity duration-300`}>
+            <span className="inline-block w-2 h-2 rounded-full bg-current mr-2"></span>
+            {status.text}
+          </span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex flex-col items-center">
+        <div className="relative w-32 h-32 mb-4">
+          <svg viewBox="0 0 100 100" className="w-full h-full">
+            <circle
+              cx="50"
+              cy="50"
+              r="45"
+              fill="transparent"
+              stroke={getColor()}
+              strokeWidth="5"
+              className="transition-colors duration-300"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <text x="50" y="55" textAnchor="middle" className="text-2xl font-bold fill-foreground">
+              {value}
+            </text>
+          </svg>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+        <div className="w-full space-y-1">
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">Operator:</span>
+            <span className="font-medium">{operator}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">Current Speed:</span>
+            <span className="font-medium">{value} SPM</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">Design Number:</span>
+            <span className="font-medium">{designNumber}</span>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
 }
+
+// Sample data for speedometers
+const speedometersData = [
+  { value: 750, operator: "Emma Wilson", machine: "1", head: "8", designNumber: "D-1001" },
+  { value: 450, operator: "James Smith", machine: "2", head: "6", designNumber: "D-1002" },
+  { value: 0, operator: "Sarah Johnson", machine: "3", head: "8", designNumber: "D-1003" },
+  { value: 820, operator: "Michael Brown", machine: "4", head: "12", designNumber: "D-1004" },
+  { value: 0, operator: "Lisa Davis", machine: "5", head: "6", designNumber: "D-1005" },
+  { value: 650, operator: "Robert Miller", machine: "6", head: "8", designNumber: "D-1006" },
+]
+
+// Sample data for orders table
+const ordersData = [
+  {
+    id: "ORD-12345",
+    customer: "Acme Apparel",
+    quantity: 250,
+    status: "In Progress",
+    design: "Logo-A23",
+    dueDate: "2025-03-10",
+  },
+  {
+    id: "ORD-12346",
+    customer: "SportsFit Inc",
+    quantity: 500,
+    status: "Approved",
+    design: "Jersey-B17",
+    dueDate: "2025-03-12",
+  },
+  {
+    id: "ORD-12347",
+    customer: "Uniform Pro",
+    quantity: 100,
+    status: "Finishing",
+    design: "Badge-C45",
+    dueDate: "2025-03-08",
+  },
+  {
+    id: "ORD-12348",
+    customer: "Fashion Forward",
+    quantity: 350,
+    status: "Received",
+    design: "Pattern-D32",
+    dueDate: "2025-03-15",
+  },
+  {
+    id: "ORD-12349",
+    customer: "School District #5",
+    quantity: 200,
+    status: "Approved",
+    design: "Mascot-E19",
+    dueDate: "2025-03-20",
+  },
+]
+
+// Status badge component
+const StatusBadge = ({ status }) => {
+  const getStatusColor = () => {
+    switch (status) {
+      case "Approved":
+        return "bg-blue-500"
+      case "Received":
+        return "bg-yellow-500"
+      case "In Progress":
+        return "bg-purple-500"
+      case "Finishing":
+        return "bg-green-500"
+      default:
+        return "bg-gray-500"
+    }
+  }
+
+  return <Badge className={`${getStatusColor()} hover:${getStatusColor()}`}>{status}</Badge>
+}
+
+export default function EmbroideryDashboard() {
+  return (
+    <div className="py-8 px-4">
+      <header className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight">Embroidery Production Dashboard</h1>
+        <p className="text-muted-foreground mt-2">Real-time monitoring of machine performance and order status</p>
+      </header>
+
+      <section className="mb-8">
+        <h2 className="text-xl font-semibold mb-4">Machine Status</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {speedometersData.map((data, index) => (
+            <Speedometer key={index} {...data} threshold={500} />
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold">Orders Info</h2>
+          <p className="text-sm text-muted-foreground">Sorted by due date</p>
+        </div>
+        <Card className="p-1 rounded-sm">
+          <CardContent className="p-0">
+            <Table className="font">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="font-bold text-[16px]">Order ID</TableHead>
+                  <TableHead className="font-bold text-[16px]">Customer</TableHead>
+                  <TableHead className="font-bold text-[16px]">Quantity</TableHead>
+                  <TableHead className="font-bold text-[16px]">Design</TableHead>
+                  <TableHead className="font-bold text-[16px]">Due Date</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {ordersData.map((order) => (
+                  <TableRow key={order.id} className="text-[16px]">
+                    <TableCell className="font-medium">{order.id}</TableCell>
+                    <TableCell>{order.customer}</TableCell>
+                    <TableCell>{order.quantity}</TableCell>
+                    <TableCell>{order.design}</TableCell>
+                    <TableCell>{new Date(order.dueDate).toLocaleDateString()}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </section>
+    </div>
+  )
+}
+
