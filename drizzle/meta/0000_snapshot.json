@@ -1,0 +1,4294 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "5",
+  "dialect": "mysql",
+  "tables": {
+    "__migrationhistory": {
+      "name": "__migrationhistory",
+      "columns": {
+        "Migration_ID": {
+          "autoincrement": false,
+          "name": "Migration_ID",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Context_Key": {
+          "autoincrement": false,
+          "name": "Context_Key",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Model": {
+          "autoincrement": false,
+          "name": "Model",
+          "type": "longblob",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ProductVersion": {
+          "autoincrement": false,
+          "name": "ProductVersion",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "__migrationhistory_Migration_ID_Context_Key": {
+          "name": "__migrationhistory_Migration_ID_Context_Key",
+          "columns": [
+            "Migration_ID",
+            "Context_Key"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "aspnetrestrictions": {
+      "name": "aspnetrestrictions",
+      "columns": {
+        "Id": {
+          "autoincrement": false,
+          "name": "Id",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Resource": {
+          "autoincrement": false,
+          "name": "Resource",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Restriction": {
+          "autoincrement": false,
+          "name": "Restriction",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Selected": {
+          "autoincrement": false,
+          "name": "Selected",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Discriminator": {
+          "autoincrement": false,
+          "name": "Discriminator",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "aspnetrestrictions_Id": {
+          "name": "aspnetrestrictions_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "aspnetrolerestrictions": {
+      "name": "aspnetrolerestrictions",
+      "columns": {
+        "RoleId": {
+          "autoincrement": false,
+          "name": "RoleId",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "RestrictionId": {
+          "autoincrement": false,
+          "name": "RestrictionId",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "aspnetrolerestrictions_RoleId_RestrictionId": {
+          "name": "aspnetrolerestrictions_RoleId_RestrictionId",
+          "columns": [
+            "RoleId",
+            "RestrictionId"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "IdentityRestriction_Roles": {
+          "name": "IdentityRestriction_Roles",
+          "tableFrom": "aspnetrolerestrictions",
+          "tableTo": "aspnetrestrictions",
+          "columnsFrom": [
+            "RestrictionId"
+          ],
+          "columnsTo": [
+            "Id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "IdentityRole_Restrictions": {
+          "name": "IdentityRole_Restrictions",
+          "tableFrom": "aspnetrolerestrictions",
+          "tableTo": "aspnetroles",
+          "columnsFrom": [
+            "RoleId"
+          ],
+          "columnsTo": [
+            "Id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "aspnetroles": {
+      "name": "aspnetroles",
+      "columns": {
+        "Id": {
+          "autoincrement": false,
+          "name": "Id",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Name": {
+          "autoincrement": false,
+          "name": "Name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "IsSystemProtected": {
+          "autoincrement": false,
+          "name": "IsSystemProtected",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "aspnetroles_Id": {
+          "name": "aspnetroles_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "aspnetusermachines": {
+      "name": "aspnetusermachines",
+      "columns": {
+        "UserId": {
+          "autoincrement": false,
+          "name": "UserId",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "MachineId": {
+          "autoincrement": false,
+          "name": "MachineId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "aspnetusermachines_UserId_MachineId": {
+          "name": "aspnetusermachines_UserId_MachineId",
+          "columns": [
+            "UserId",
+            "MachineId"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "IdentityUser_Machines_Source": {
+          "name": "IdentityUser_Machines_Source",
+          "tableFrom": "aspnetusermachines",
+          "tableTo": "aspnetusers",
+          "columnsFrom": [
+            "UserId"
+          ],
+          "columnsTo": [
+            "Id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "IdentityUser_Machines_Target": {
+          "name": "IdentityUser_Machines_Target",
+          "tableFrom": "aspnetusermachines",
+          "tableTo": "machines",
+          "columnsFrom": [
+            "MachineId"
+          ],
+          "columnsTo": [
+            "MachineId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "aspnetuserroles": {
+      "name": "aspnetuserroles",
+      "columns": {
+        "UserId": {
+          "autoincrement": false,
+          "name": "UserId",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "RoleId": {
+          "autoincrement": false,
+          "name": "RoleId",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "aspnetuserroles_UserId_RoleId": {
+          "name": "aspnetuserroles_UserId_RoleId",
+          "columns": [
+            "UserId",
+            "RoleId"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "IdentityRole_Users": {
+          "name": "IdentityRole_Users",
+          "tableFrom": "aspnetuserroles",
+          "tableTo": "aspnetroles",
+          "columnsFrom": [
+            "RoleId"
+          ],
+          "columnsTo": [
+            "Id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "IdentityUser_Roles": {
+          "name": "IdentityUser_Roles",
+          "tableFrom": "aspnetuserroles",
+          "tableTo": "aspnetusers",
+          "columnsFrom": [
+            "UserId"
+          ],
+          "columnsTo": [
+            "Id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "aspnetusers": {
+      "name": "aspnetusers",
+      "columns": {
+        "Id": {
+          "autoincrement": false,
+          "name": "Id",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Email": {
+          "autoincrement": false,
+          "name": "Email",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "EmailConfirmed": {
+          "autoincrement": false,
+          "name": "EmailConfirmed",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "PasswordHash": {
+          "autoincrement": false,
+          "name": "PasswordHash",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "SecurityStamp": {
+          "autoincrement": false,
+          "name": "SecurityStamp",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "PhoneNumber": {
+          "autoincrement": false,
+          "name": "PhoneNumber",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "PhoneNumberConfirmed": {
+          "autoincrement": false,
+          "name": "PhoneNumberConfirmed",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "TwoFactorEnabled": {
+          "autoincrement": false,
+          "name": "TwoFactorEnabled",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "LockoutEndDateUtc": {
+          "autoincrement": false,
+          "name": "LockoutEndDateUtc",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LockoutEnabled": {
+          "autoincrement": false,
+          "name": "LockoutEnabled",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "AccessFailedCount": {
+          "autoincrement": false,
+          "name": "AccessFailedCount",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "UserName": {
+          "autoincrement": false,
+          "name": "UserName",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "LastModifiedDate": {
+          "autoincrement": false,
+          "name": "LastModifiedDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {
+        "aspnetusers_Id": {
+          "name": "aspnetusers_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "brotherinkreports": {
+      "name": "brotherinkreports",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "IsSynced": {
+          "autoincrement": false,
+          "name": "IsSynced",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Job": {
+          "autoincrement": false,
+          "name": "Job",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Printer": {
+          "autoincrement": false,
+          "name": "Printer",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "MachineMode": {
+          "autoincrement": false,
+          "name": "MachineMode",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ImageFile": {
+          "autoincrement": false,
+          "name": "ImageFile",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CreatedDateUtc": {
+          "autoincrement": false,
+          "name": "CreatedDateUtc",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "PlatenSize": {
+          "autoincrement": false,
+          "name": "PlatenSize",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Resolution": {
+          "autoincrement": false,
+          "name": "Resolution",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "InkCombination": {
+          "autoincrement": false,
+          "name": "InkCombination",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Mode": {
+          "autoincrement": false,
+          "name": "Mode",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Highlight": {
+          "autoincrement": false,
+          "name": "Highlight",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Mask": {
+          "autoincrement": false,
+          "name": "Mask",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "InkVolume": {
+          "autoincrement": false,
+          "name": "InkVolume",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "DoublePrinting": {
+          "autoincrement": false,
+          "name": "DoublePrinting",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "PrintTime": {
+          "autoincrement": false,
+          "name": "PrintTime",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Whiteness": {
+          "autoincrement": false,
+          "name": "Whiteness",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "UseBackgroundBlackColor": {
+          "autoincrement": false,
+          "name": "UseBackgroundBlackColor",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ColorMultiplePassPrinting": {
+          "autoincrement": false,
+          "name": "ColorMultiplePassPrinting",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "TransparentColor": {
+          "autoincrement": false,
+          "name": "TransparentColor",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ColorNameOfTransparentColor": {
+          "autoincrement": false,
+          "name": "ColorNameOfTransparentColor",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Tolerance": {
+          "autoincrement": false,
+          "name": "Tolerance",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "MinWhiteness": {
+          "autoincrement": false,
+          "name": "MinWhiteness",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ChokeWidth": {
+          "autoincrement": false,
+          "name": "ChokeWidth",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "WhiteColorPause": {
+          "autoincrement": false,
+          "name": "WhiteColorPause",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Saturation": {
+          "autoincrement": false,
+          "name": "Saturation",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Brightness": {
+          "autoincrement": false,
+          "name": "Brightness",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Contrast": {
+          "autoincrement": false,
+          "name": "Contrast",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "CyanBalance": {
+          "autoincrement": false,
+          "name": "CyanBalance",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "MagentaBalance": {
+          "autoincrement": false,
+          "name": "MagentaBalance",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "YellowBalance": {
+          "autoincrement": false,
+          "name": "YellowBalance",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "BlackBalance": {
+          "autoincrement": false,
+          "name": "BlackBalance",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "UniPrint": {
+          "autoincrement": false,
+          "name": "UniPrint",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ColorInkVolume": {
+          "autoincrement": false,
+          "name": "ColorInkVolume",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "WhiteInkVolume": {
+          "autoincrement": false,
+          "name": "WhiteInkVolume",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Copies": {
+          "autoincrement": false,
+          "name": "Copies",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "brotherinkreports_Id": {
+          "name": "brotherinkreports_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "colorprofileprinters": {
+      "name": "colorprofileprinters",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ColorProfileID": {
+          "autoincrement": false,
+          "name": "ColorProfileID",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "PrinterID": {
+          "autoincrement": false,
+          "name": "PrinterID",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "FilePath": {
+          "autoincrement": false,
+          "name": "FilePath",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "SubfolderPath": {
+          "autoincrement": false,
+          "name": "SubfolderPath",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "colorprofileprinters_Id": {
+          "name": "colorprofileprinters_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {
+        "ColorProfileID": {
+          "name": "ColorProfileID",
+          "columns": [
+            "ColorProfileID"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "ColorProfilePrinter_ColorProfile": {
+          "name": "ColorProfilePrinter_ColorProfile",
+          "tableFrom": "colorprofileprinters",
+          "tableTo": "colorprofiles",
+          "columnsFrom": [
+            "ColorProfileID"
+          ],
+          "columnsTo": [
+            "Id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "colorprofiles": {
+      "name": "colorprofiles",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Name": {
+          "autoincrement": false,
+          "name": "Name",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Enabled": {
+          "autoincrement": false,
+          "name": "Enabled",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "SubFolderPath": {
+          "autoincrement": false,
+          "name": "SubFolderPath",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "colorprofiles_Id": {
+          "name": "colorprofiles_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "colours": {
+      "name": "colours",
+      "columns": {
+        "ColourId": {
+          "autoincrement": true,
+          "name": "ColourId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Name": {
+          "autoincrement": false,
+          "name": "Name",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Code": {
+          "autoincrement": false,
+          "name": "Code",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Manufacturer": {
+          "autoincrement": false,
+          "name": "Manufacturer",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Red": {
+          "autoincrement": false,
+          "name": "Red",
+          "type": "tinyint unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Green": {
+          "autoincrement": false,
+          "name": "Green",
+          "type": "tinyint unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Blue": {
+          "autoincrement": false,
+          "name": "Blue",
+          "type": "tinyint unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Active": {
+          "autoincrement": false,
+          "name": "Active",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Source": {
+          "autoincrement": false,
+          "name": "Source",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LastModifiedDate": {
+          "autoincrement": false,
+          "name": "LastModifiedDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CloudColourId": {
+          "autoincrement": false,
+          "name": "CloudColourId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "DefaultColorProfileId": {
+          "autoincrement": false,
+          "name": "DefaultColorProfileId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ColourType": {
+          "autoincrement": false,
+          "name": "ColourType",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "colours_ColourId": {
+          "name": "colours_ColourId",
+          "columns": [
+            "ColourId"
+          ]
+        }
+      },
+      "indexes": {
+        "DefaultColorProfileId": {
+          "name": "DefaultColorProfileId",
+          "columns": [
+            "DefaultColorProfileId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "ColorProfile_Colours": {
+          "name": "ColorProfile_Colours",
+          "tableFrom": "colours",
+          "tableTo": "colorprofiles",
+          "columnsFrom": [
+            "DefaultColorProfileId"
+          ],
+          "columnsTo": [
+            "Id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {
+        "ColourId": {
+          "name": "ColourId",
+          "columns": [
+            "ColourId"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "designstatisticsv2": {
+      "name": "designstatisticsv2",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "LogoId": {
+          "autoincrement": false,
+          "name": "LogoId",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "DesignWidth": {
+          "autoincrement": false,
+          "name": "DesignWidth",
+          "type": "float",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "DesignHeight": {
+          "autoincrement": false,
+          "name": "DesignHeight",
+          "type": "float",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Stitches": {
+          "autoincrement": false,
+          "name": "Stitches",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Trims": {
+          "autoincrement": false,
+          "name": "Trims",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Recipe": {
+          "autoincrement": false,
+          "name": "Recipe",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "MachineFormat": {
+          "autoincrement": false,
+          "name": "MachineFormat",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NumElements": {
+          "autoincrement": false,
+          "name": "NumElements",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Top": {
+          "autoincrement": false,
+          "name": "Top",
+          "type": "float",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Left": {
+          "autoincrement": false,
+          "name": "Left",
+          "type": "float",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "OrderId": {
+          "autoincrement": false,
+          "name": "OrderId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "NeedleSequence": {
+          "autoincrement": false,
+          "name": "NeedleSequence",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Threads": {
+          "autoincrement": false,
+          "name": "Threads",
+          "type": "varchar(8000)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Job": {
+          "autoincrement": false,
+          "name": "Job",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "CreatedOrUpdatedDate": {
+          "autoincrement": false,
+          "name": "CreatedOrUpdatedDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "designstatisticsv2_Id": {
+          "name": "designstatisticsv2_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "eventlogs": {
+      "name": "eventlogs",
+      "columns": {
+        "EventLogId": {
+          "autoincrement": true,
+          "name": "EventLogId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "EventDateTime": {
+          "autoincrement": false,
+          "name": "EventDateTime",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "EventType": {
+          "autoincrement": false,
+          "name": "EventType",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Job": {
+          "autoincrement": false,
+          "name": "Job",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "UserId": {
+          "autoincrement": false,
+          "name": "UserId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "MachineName": {
+          "autoincrement": false,
+          "name": "MachineName",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Resew": {
+          "autoincrement": false,
+          "name": "Resew",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NumStitches": {
+          "autoincrement": false,
+          "name": "NumStitches",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Reason": {
+          "autoincrement": false,
+          "name": "Reason",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NeedlesUsed": {
+          "autoincrement": false,
+          "name": "NeedlesUsed",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ThreadBreakHead": {
+          "autoincrement": false,
+          "name": "ThreadBreakHead",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ThreadBreakNeedle": {
+          "autoincrement": false,
+          "name": "ThreadBreakNeedle",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NumActiveHeads": {
+          "autoincrement": false,
+          "name": "NumActiveHeads",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NumTotalHeads": {
+          "autoincrement": false,
+          "name": "NumTotalHeads",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "OrderType": {
+          "autoincrement": false,
+          "name": "OrderType",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "OrderNumber": {
+          "autoincrement": false,
+          "name": "OrderNumber",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IsSync": {
+          "autoincrement": false,
+          "name": "IsSync",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ProductCategoryId": {
+          "autoincrement": false,
+          "name": "ProductCategoryId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "eventlogs_EventLogId": {
+          "name": "eventlogs_EventLogId",
+          "columns": [
+            "EventLogId"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "EventLogId": {
+          "name": "EventLogId",
+          "columns": [
+            "EventLogId"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "grouporders": {
+      "name": "grouporders",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "grouporders_Id": {
+          "name": "grouporders_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "lateboundsewingmessages": {
+      "name": "lateboundsewingmessages",
+      "columns": {
+        "LateBoundSewingMessageId": {
+          "autoincrement": true,
+          "name": "LateBoundSewingMessageId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Job": {
+          "autoincrement": false,
+          "name": "Job",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "BeforeSewingMessage": {
+          "autoincrement": false,
+          "name": "BeforeSewingMessage",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "AfterSewingMessage": {
+          "autoincrement": false,
+          "name": "AfterSewingMessage",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LastModifiedDate": {
+          "autoincrement": false,
+          "name": "LastModifiedDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CloudLateboundSewingMessageId": {
+          "autoincrement": false,
+          "name": "CloudLateboundSewingMessageId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "lateboundsewingmessages_LateBoundSewingMessageId": {
+          "name": "lateboundsewingmessages_LateBoundSewingMessageId",
+          "columns": [
+            "LateBoundSewingMessageId"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "LateBoundSewingMessageId": {
+          "name": "LateBoundSewingMessageId",
+          "columns": [
+            "LateBoundSewingMessageId"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "machineneedles": {
+      "name": "machineneedles",
+      "columns": {
+        "MachineNeedleId": {
+          "autoincrement": true,
+          "name": "MachineNeedleId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "MachineId": {
+          "autoincrement": false,
+          "name": "MachineId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "NeedleNumber": {
+          "autoincrement": false,
+          "name": "NeedleNumber",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ColourId": {
+          "autoincrement": false,
+          "name": "ColourId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "machineneedles_MachineNeedleId": {
+          "name": "machineneedles_MachineNeedleId",
+          "columns": [
+            "MachineNeedleId"
+          ]
+        }
+      },
+      "indexes": {
+        "ColourId": {
+          "name": "ColourId",
+          "columns": [
+            "ColourId"
+          ],
+          "isUnique": false
+        },
+        "MachineId": {
+          "name": "MachineId",
+          "columns": [
+            "MachineId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "MachineNeedle_Colour": {
+          "name": "MachineNeedle_Colour",
+          "tableFrom": "machineneedles",
+          "tableTo": "colours",
+          "columnsFrom": [
+            "ColourId"
+          ],
+          "columnsTo": [
+            "ColourId"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "Machine_MachineNeedles": {
+          "name": "Machine_MachineNeedles",
+          "tableFrom": "machineneedles",
+          "tableTo": "machines",
+          "columnsFrom": [
+            "MachineId"
+          ],
+          "columnsTo": [
+            "MachineId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {
+        "MachineNeedleId": {
+          "name": "MachineNeedleId",
+          "columns": [
+            "MachineNeedleId"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "machines": {
+      "name": "machines",
+      "columns": {
+        "MachineId": {
+          "autoincrement": true,
+          "name": "MachineId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Name": {
+          "autoincrement": false,
+          "name": "Name",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "IsUseDefaultNeedles": {
+          "autoincrement": false,
+          "name": "IsUseDefaultNeedles",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "MachineCategory": {
+          "autoincrement": false,
+          "name": "MachineCategory",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Description": {
+          "autoincrement": false,
+          "name": "Description",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "PossibleStitches": {
+          "autoincrement": false,
+          "name": "PossibleStitches",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NumberOfHeads": {
+          "autoincrement": false,
+          "name": "NumberOfHeads",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LastModifiedDate": {
+          "autoincrement": false,
+          "name": "LastModifiedDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CloudMachineId": {
+          "autoincrement": false,
+          "name": "CloudMachineId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Active": {
+          "autoincrement": false,
+          "name": "Active",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Alias": {
+          "autoincrement": false,
+          "name": "Alias",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "SetupTime": {
+          "autoincrement": false,
+          "name": "SetupTime",
+          "type": "double",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "AppliqueStop": {
+          "autoincrement": false,
+          "name": "AppliqueStop",
+          "type": "double",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "RPM": {
+          "autoincrement": false,
+          "name": "RPM",
+          "type": "double",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ColourChangeTime": {
+          "autoincrement": false,
+          "name": "ColourChangeTime",
+          "type": "double",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TrimTime": {
+          "autoincrement": false,
+          "name": "TrimTime",
+          "type": "double",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ShouldColourize": {
+          "autoincrement": false,
+          "name": "ShouldColourize",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IsSerial": {
+          "autoincrement": false,
+          "name": "IsSerial",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ActualMachineName": {
+          "autoincrement": false,
+          "name": "ActualMachineName",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "AutoSendToQueue": {
+          "autoincrement": false,
+          "name": "AutoSendToQueue",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TruncateLength": {
+          "autoincrement": false,
+          "name": "TruncateLength",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "SetNeedles": {
+          "autoincrement": false,
+          "name": "SetNeedles",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "MaxNeedleNumber": {
+          "autoincrement": false,
+          "name": "MaxNeedleNumber",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IsColoreel": {
+          "autoincrement": false,
+          "name": "IsColoreel",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ColoreelApiUrl": {
+          "autoincrement": false,
+          "name": "ColoreelApiUrl",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ColoreelApiSecret": {
+          "autoincrement": false,
+          "name": "ColoreelApiSecret",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ColoreelUsername": {
+          "autoincrement": false,
+          "name": "ColoreelUsername",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TajimaConnectUrl": {
+          "autoincrement": false,
+          "name": "TajimaConnectUrl",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TajimaConnectUsername": {
+          "autoincrement": false,
+          "name": "TajimaConnectUsername",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TajimaConnectPassword": {
+          "autoincrement": false,
+          "name": "TajimaConnectPassword",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "machines_MachineId": {
+          "name": "machines_MachineId",
+          "columns": [
+            "MachineId"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "MachineId": {
+          "name": "MachineId",
+          "columns": [
+            "MachineId"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "mcerrorcategories": {
+      "name": "mcerrorcategories",
+      "columns": {
+        "McErrorCategoriesId": {
+          "autoincrement": true,
+          "name": "McErrorCategoriesId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Name": {
+          "autoincrement": false,
+          "name": "Name",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ParentId": {
+          "autoincrement": false,
+          "name": "ParentId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "mcerrorcategories_McErrorCategoriesId": {
+          "name": "mcerrorcategories_McErrorCategoriesId",
+          "columns": [
+            "McErrorCategoriesId"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "McErrorCategoriesId": {
+          "name": "McErrorCategoriesId",
+          "columns": [
+            "McErrorCategoriesId"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "mcerrorcodes": {
+      "name": "mcerrorcodes",
+      "columns": {
+        "McErrorCodeId": {
+          "autoincrement": true,
+          "name": "McErrorCodeId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Code": {
+          "autoincrement": false,
+          "name": "Code",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Message": {
+          "autoincrement": false,
+          "name": "Message",
+          "type": "varchar(300)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Severity": {
+          "autoincrement": false,
+          "name": "Severity",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "CategoryId": {
+          "autoincrement": false,
+          "name": "CategoryId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Parameters": {
+          "autoincrement": false,
+          "name": "Parameters",
+          "type": "varchar(80)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "mcerrorcodes_McErrorCodeId": {
+          "name": "mcerrorcodes_McErrorCodeId",
+          "columns": [
+            "McErrorCodeId"
+          ]
+        }
+      },
+      "indexes": {
+        "CategoryId": {
+          "name": "CategoryId",
+          "columns": [
+            "CategoryId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "McErrorCodes_Category": {
+          "name": "McErrorCodes_Category",
+          "tableFrom": "mcerrorcodes",
+          "tableTo": "mcerrorcategories",
+          "columnsFrom": [
+            "CategoryId"
+          ],
+          "columnsTo": [
+            "McErrorCategoriesId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {
+        "McErrorCodeId": {
+          "name": "McErrorCodeId",
+          "columns": [
+            "McErrorCodeId"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "mcerrorlog": {
+      "name": "mcerrorlog",
+      "columns": {
+        "McErrorLogId": {
+          "autoincrement": true,
+          "name": "McErrorLogId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "DateTime": {
+          "autoincrement": false,
+          "name": "DateTime",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "MachineId": {
+          "autoincrement": false,
+          "name": "MachineId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CodeId": {
+          "autoincrement": false,
+          "name": "CodeId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Parameters": {
+          "autoincrement": false,
+          "name": "Parameters",
+          "type": "varchar(80)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IsSync": {
+          "autoincrement": false,
+          "name": "IsSync",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "mcerrorlog_McErrorLogId": {
+          "name": "mcerrorlog_McErrorLogId",
+          "columns": [
+            "McErrorLogId"
+          ]
+        }
+      },
+      "indexes": {
+        "CodeId": {
+          "name": "CodeId",
+          "columns": [
+            "CodeId"
+          ],
+          "isUnique": false
+        },
+        "MachineId": {
+          "name": "MachineId",
+          "columns": [
+            "MachineId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "McErrorLog_Code": {
+          "name": "McErrorLog_Code",
+          "tableFrom": "mcerrorlog",
+          "tableTo": "mcerrorcodes",
+          "columnsFrom": [
+            "CodeId"
+          ],
+          "columnsTo": [
+            "McErrorCodeId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "McErrorLog_Machine": {
+          "name": "McErrorLog_Machine",
+          "tableFrom": "mcerrorlog",
+          "tableTo": "machines",
+          "columnsFrom": [
+            "MachineId"
+          ],
+          "columnsTo": [
+            "MachineId"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {
+        "McErrorLogId": {
+          "name": "McErrorLogId",
+          "columns": [
+            "McErrorLogId"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "mcmachinecategory": {
+      "name": "mcmachinecategory",
+      "columns": {
+        "McMachineCategoryId": {
+          "autoincrement": true,
+          "name": "McMachineCategoryId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "MachineId": {
+          "autoincrement": false,
+          "name": "MachineId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ProductCategoryId": {
+          "autoincrement": false,
+          "name": "ProductCategoryId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "IsSync": {
+          "autoincrement": false,
+          "name": "IsSync",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {
+        "mcmachinecategory_McMachineCategoryId": {
+          "name": "mcmachinecategory_McMachineCategoryId",
+          "columns": [
+            "McMachineCategoryId"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "McMachineCategoryId": {
+          "name": "McMachineCategoryId",
+          "columns": [
+            "McMachineCategoryId"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "mcversionings": {
+      "name": "mcversionings",
+      "columns": {
+        "VersioningId": {
+          "autoincrement": true,
+          "name": "VersioningId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Name": {
+          "autoincrement": false,
+          "name": "Name",
+          "type": "varchar(300)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Version": {
+          "autoincrement": false,
+          "name": "Version",
+          "type": "varchar(300)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "IsSync": {
+          "autoincrement": false,
+          "name": "IsSync",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "mcversionings_VersioningId": {
+          "name": "mcversionings_VersioningId",
+          "columns": [
+            "VersioningId"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "VersioningId": {
+          "name": "VersioningId",
+          "columns": [
+            "VersioningId"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "messageofthedays": {
+      "name": "messageofthedays",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "StartDate": {
+          "autoincrement": false,
+          "name": "StartDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "EndDate": {
+          "autoincrement": false,
+          "name": "EndDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Message": {
+          "autoincrement": false,
+          "name": "Message",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "messageofthedays_Id": {
+          "name": "messageofthedays_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "needlecolours": {
+      "name": "needlecolours",
+      "columns": {
+        "NeedleColourId": {
+          "autoincrement": true,
+          "name": "NeedleColourId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "NeedleNumber": {
+          "autoincrement": false,
+          "name": "NeedleNumber",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ColourId": {
+          "autoincrement": false,
+          "name": "ColourId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LastModifiedDate": {
+          "autoincrement": false,
+          "name": "LastModifiedDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CloudNeedleColourId": {
+          "autoincrement": false,
+          "name": "CloudNeedleColourId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "needlecolours_NeedleColourId": {
+          "name": "needlecolours_NeedleColourId",
+          "columns": [
+            "NeedleColourId"
+          ]
+        }
+      },
+      "indexes": {
+        "ColourId": {
+          "name": "ColourId",
+          "columns": [
+            "ColourId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "NeedleColour_Colour": {
+          "name": "NeedleColour_Colour",
+          "tableFrom": "needlecolours",
+          "tableTo": "colours",
+          "columnsFrom": [
+            "ColourId"
+          ],
+          "columnsTo": [
+            "ColourId"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {
+        "NeedleColourId": {
+          "name": "NeedleColourId",
+          "columns": [
+            "NeedleColourId"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "nestingorders": {
+      "name": "nestingorders",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "OrderId": {
+          "autoincrement": false,
+          "name": "OrderId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "NestingId": {
+          "autoincrement": false,
+          "name": "NestingId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "nestingorders_Id": {
+          "name": "nestingorders_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {
+        "NestingId": {
+          "name": "NestingId",
+          "columns": [
+            "NestingId"
+          ],
+          "isUnique": false
+        },
+        "OrderId": {
+          "name": "OrderId",
+          "columns": [
+            "OrderId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "NestingOrder_Order": {
+          "name": "NestingOrder_Order",
+          "tableFrom": "nestingorders",
+          "tableTo": "orders",
+          "columnsFrom": [
+            "OrderId"
+          ],
+          "columnsTo": [
+            "OrderId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "Nesting_NestingOrders": {
+          "name": "Nesting_NestingOrders",
+          "tableFrom": "nestingorders",
+          "tableTo": "nestings",
+          "columnsFrom": [
+            "NestingId"
+          ],
+          "columnsTo": [
+            "Id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "nestings": {
+      "name": "nestings",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ReleasedDate": {
+          "autoincrement": false,
+          "name": "ReleasedDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "MediaType": {
+          "autoincrement": false,
+          "name": "MediaType",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Status": {
+          "autoincrement": false,
+          "name": "Status",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Profile": {
+          "autoincrement": false,
+          "name": "Profile",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "AutomaticProfile": {
+          "autoincrement": false,
+          "name": "AutomaticProfile",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "BatchNumber": {
+          "autoincrement": false,
+          "name": "BatchNumber",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "BatchUrl": {
+          "autoincrement": false,
+          "name": "BatchUrl",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "BatchComments": {
+          "autoincrement": false,
+          "name": "BatchComments",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "nestings_Id": {
+          "name": "nestings_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "operators": {
+      "name": "operators",
+      "columns": {
+        "OperatorId": {
+          "autoincrement": true,
+          "name": "OperatorId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Username": {
+          "autoincrement": false,
+          "name": "Username",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "FirstName": {
+          "autoincrement": false,
+          "name": "FirstName",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "LastName": {
+          "autoincrement": false,
+          "name": "LastName",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "IsActive": {
+          "autoincrement": false,
+          "name": "IsActive",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "EmailAddress": {
+          "autoincrement": false,
+          "name": "EmailAddress",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "PhoneNumber": {
+          "autoincrement": false,
+          "name": "PhoneNumber",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "SupervisorName": {
+          "autoincrement": false,
+          "name": "SupervisorName",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CannedMessages": {
+          "autoincrement": false,
+          "name": "CannedMessages",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LastModifiedDate": {
+          "autoincrement": false,
+          "name": "LastModifiedDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CloudOperatorId": {
+          "autoincrement": false,
+          "name": "CloudOperatorId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "operators_OperatorId": {
+          "name": "operators_OperatorId",
+          "columns": [
+            "OperatorId"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "OperatorId": {
+          "name": "OperatorId",
+          "columns": [
+            "OperatorId"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "orderitems": {
+      "name": "orderitems",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "OrderId": {
+          "autoincrement": false,
+          "name": "OrderId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Number": {
+          "autoincrement": false,
+          "name": "Number",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Status": {
+          "autoincrement": false,
+          "name": "Status",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TrackingNumber": {
+          "autoincrement": false,
+          "name": "TrackingNumber",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "orderitems_Id": {
+          "name": "orderitems_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {
+        "OrderId": {
+          "name": "OrderId",
+          "columns": [
+            "OrderId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "OrderItem_Order": {
+          "name": "OrderItem_Order",
+          "tableFrom": "orderitems",
+          "tableTo": "orders",
+          "columnsFrom": [
+            "OrderId"
+          ],
+          "columnsTo": [
+            "OrderId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "orderjsoninfoes": {
+      "name": "orderjsoninfoes",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "OrderId": {
+          "autoincrement": false,
+          "name": "OrderId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "JsonDetails": {
+          "autoincrement": false,
+          "name": "JsonDetails",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ProductViewId": {
+          "autoincrement": false,
+          "name": "ProductViewId",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {
+        "orderjsoninfoes_Id": {
+          "name": "orderjsoninfoes_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {
+        "OrderId": {
+          "name": "OrderId",
+          "columns": [
+            "OrderId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "OrderJsonInfo_Order": {
+          "name": "OrderJsonInfo_Order",
+          "tableFrom": "orderjsoninfoes",
+          "tableTo": "orders",
+          "columnsFrom": [
+            "OrderId"
+          ],
+          "columnsTo": [
+            "OrderId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "orders": {
+      "name": "orders",
+      "columns": {
+        "OrderId": {
+          "autoincrement": true,
+          "name": "OrderId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Job": {
+          "autoincrement": false,
+          "name": "Job",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "WorkPacketId": {
+          "autoincrement": false,
+          "name": "WorkPacketId",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CustomerOrderNumber": {
+          "autoincrement": false,
+          "name": "CustomerOrderNumber",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "OrderDate": {
+          "autoincrement": false,
+          "name": "OrderDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ProductCode": {
+          "autoincrement": false,
+          "name": "ProductCode",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Style": {
+          "autoincrement": false,
+          "name": "Style",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "StyleName": {
+          "autoincrement": false,
+          "name": "StyleName",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "InputFileName": {
+          "autoincrement": false,
+          "name": "InputFileName",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NamesInGroupingNameTapes": {
+          "autoincrement": false,
+          "name": "NamesInGroupingNameTapes",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NameTapeEmblemCode": {
+          "autoincrement": false,
+          "name": "NameTapeEmblemCode",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Design": {
+          "autoincrement": false,
+          "name": "Design",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TemplateCode": {
+          "autoincrement": false,
+          "name": "TemplateCode",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TemplateName": {
+          "autoincrement": false,
+          "name": "TemplateName",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CatalogId": {
+          "autoincrement": false,
+          "name": "CatalogId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TemplateColourOverride": {
+          "autoincrement": false,
+          "name": "TemplateColourOverride",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LineSpacingOverride": {
+          "autoincrement": false,
+          "name": "LineSpacingOverride",
+          "type": "double",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "DesignSpacingOverride": {
+          "autoincrement": false,
+          "name": "DesignSpacingOverride",
+          "type": "double",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "PrimaryColour": {
+          "autoincrement": false,
+          "name": "PrimaryColour",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "SecondaryColour": {
+          "autoincrement": false,
+          "name": "SecondaryColour",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TemplateFile": {
+          "autoincrement": false,
+          "name": "TemplateFile",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "OutputFile": {
+          "autoincrement": false,
+          "name": "OutputFile",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Status": {
+          "autoincrement": false,
+          "name": "Status",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "IsBlacklistChecked": {
+          "autoincrement": false,
+          "name": "IsBlacklistChecked",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "IsManuallyCreated": {
+          "autoincrement": false,
+          "name": "IsManuallyCreated",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "CreatedDate": {
+          "autoincrement": false,
+          "name": "CreatedDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ShipByDate": {
+          "autoincrement": false,
+          "name": "ShipByDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ProcessedDate": {
+          "autoincrement": false,
+          "name": "ProcessedDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "SewingDate": {
+          "autoincrement": false,
+          "name": "SewingDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompletedDate": {
+          "autoincrement": false,
+          "name": "CompletedDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IsDeleted": {
+          "autoincrement": false,
+          "name": "IsDeleted",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "OrderType": {
+          "autoincrement": false,
+          "name": "OrderType",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CustomerName": {
+          "autoincrement": false,
+          "name": "CustomerName",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CustomerGender": {
+          "autoincrement": false,
+          "name": "CustomerGender",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CustomerTelNumber": {
+          "autoincrement": false,
+          "name": "CustomerTelNumber",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CustomerEmail": {
+          "autoincrement": false,
+          "name": "CustomerEmail",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CustomerApiId": {
+          "autoincrement": false,
+          "name": "CustomerApiId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "IsEmailSent": {
+          "autoincrement": false,
+          "name": "IsEmailSent",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ProductSize": {
+          "autoincrement": false,
+          "name": "ProductSize",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CloudOrderId": {
+          "autoincrement": false,
+          "name": "CloudOrderId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LastModifiedDate": {
+          "autoincrement": false,
+          "name": "LastModifiedDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ViewId": {
+          "autoincrement": false,
+          "name": "ViewId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ViewInfo": {
+          "autoincrement": false,
+          "name": "ViewInfo",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LocId": {
+          "autoincrement": false,
+          "name": "LocId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LocInfo": {
+          "autoincrement": false,
+          "name": "LocInfo",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "BundleId": {
+          "autoincrement": false,
+          "name": "BundleId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IsPaid": {
+          "autoincrement": false,
+          "name": "IsPaid",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ProductionType": {
+          "autoincrement": false,
+          "name": "ProductionType",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ItemLocation": {
+          "autoincrement": false,
+          "name": "ItemLocation",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Size": {
+          "autoincrement": false,
+          "name": "Size",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IsPrioritized": {
+          "autoincrement": false,
+          "name": "IsPrioritized",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LoadedToTheClient": {
+          "autoincrement": false,
+          "name": "LoadedToTheClient",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Justification": {
+          "autoincrement": false,
+          "name": "Justification",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ProductLocationId": {
+          "autoincrement": false,
+          "name": "ProductLocationId",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ScaleToFit": {
+          "autoincrement": false,
+          "name": "ScaleToFit",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LocationJustification": {
+          "autoincrement": false,
+          "name": "LocationJustification",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Delivery_Confirmation": {
+          "autoincrement": false,
+          "name": "Delivery_Confirmation",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "BackgroundColor": {
+          "autoincrement": false,
+          "name": "BackgroundColor",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Quantity": {
+          "autoincrement": false,
+          "name": "Quantity",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ProductCategoryName": {
+          "autoincrement": false,
+          "name": "ProductCategoryName",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Message": {
+          "autoincrement": false,
+          "name": "Message",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TemplateOverride": {
+          "autoincrement": false,
+          "name": "TemplateOverride",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "MaxNumCharacters": {
+          "autoincrement": false,
+          "name": "MaxNumCharacters",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "BarcodeID": {
+          "autoincrement": false,
+          "name": "BarcodeID",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "PathJsonData": {
+          "autoincrement": false,
+          "name": "PathJsonData",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Source": {
+          "autoincrement": false,
+          "name": "Source",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ClientID": {
+          "autoincrement": false,
+          "name": "ClientID",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Batch": {
+          "autoincrement": false,
+          "name": "Batch",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Facility": {
+          "autoincrement": false,
+          "name": "Facility",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ColorTheme": {
+          "autoincrement": false,
+          "name": "ColorTheme",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IsPrintWorksheet": {
+          "autoincrement": false,
+          "name": "IsPrintWorksheet",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "OriginalJobName": {
+          "autoincrement": false,
+          "name": "OriginalJobName",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "StoreId": {
+          "autoincrement": false,
+          "name": "StoreId",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ProcessOrder": {
+          "autoincrement": false,
+          "name": "ProcessOrder",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "MarketId": {
+          "autoincrement": false,
+          "name": "MarketId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "FulfillmentCenterId": {
+          "autoincrement": false,
+          "name": "FulfillmentCenterId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Address": {
+          "autoincrement": false,
+          "name": "Address",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "City": {
+          "autoincrement": false,
+          "name": "City",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "PostalCode": {
+          "autoincrement": false,
+          "name": "PostalCode",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Package": {
+          "autoincrement": false,
+          "name": "Package",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "State": {
+          "autoincrement": false,
+          "name": "State",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Address2": {
+          "autoincrement": false,
+          "name": "Address2",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Country": {
+          "autoincrement": false,
+          "name": "Country",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyCode": {
+          "autoincrement": false,
+          "name": "CompanyCode",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Color": {
+          "autoincrement": false,
+          "name": "Color",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CustomerCode": {
+          "autoincrement": false,
+          "name": "CustomerCode",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ProductPreviewURL": {
+          "autoincrement": false,
+          "name": "ProductPreviewURL",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ProductLocation": {
+          "autoincrement": false,
+          "name": "ProductLocation",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "StockLocation": {
+          "autoincrement": false,
+          "name": "StockLocation",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "GroupOrderID": {
+          "autoincrement": false,
+          "name": "GroupOrderID",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ShippingMethod": {
+          "autoincrement": false,
+          "name": "ShippingMethod",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "FCShippingCode": {
+          "autoincrement": false,
+          "name": "FCShippingCode",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "FCProductCode": {
+          "autoincrement": false,
+          "name": "FCProductCode",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompositeOrderFileName": {
+          "autoincrement": false,
+          "name": "CompositeOrderFileName",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Carrier": {
+          "autoincrement": false,
+          "name": "Carrier",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Account": {
+          "autoincrement": false,
+          "name": "Account",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CustomerCompany": {
+          "autoincrement": false,
+          "name": "CustomerCompany",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ShipBillingMethod": {
+          "autoincrement": false,
+          "name": "ShipBillingMethod",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ShipBillingZipCode": {
+          "autoincrement": false,
+          "name": "ShipBillingZipCode",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ShippingMode": {
+          "autoincrement": false,
+          "name": "ShippingMode",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "PreTreatmentCode": {
+          "autoincrement": false,
+          "name": "PreTreatmentCode",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TrackingNumber": {
+          "autoincrement": false,
+          "name": "TrackingNumber",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ShippingLabelURL": {
+          "autoincrement": false,
+          "name": "ShippingLabelURL",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ProductName": {
+          "autoincrement": false,
+          "name": "ProductName",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ProductSKU": {
+          "autoincrement": false,
+          "name": "ProductSKU",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "SalesOrderNumber": {
+          "autoincrement": false,
+          "name": "SalesOrderNumber",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "DateOrdered": {
+          "autoincrement": false,
+          "name": "DateOrdered",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "OrderDue": {
+          "autoincrement": false,
+          "name": "OrderDue",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "BorderColor": {
+          "autoincrement": false,
+          "name": "BorderColor",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "SKU": {
+          "autoincrement": false,
+          "name": "SKU",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Description": {
+          "autoincrement": false,
+          "name": "Description",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Backing": {
+          "autoincrement": false,
+          "name": "Backing",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Fabric": {
+          "autoincrement": false,
+          "name": "Fabric",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ProductCategory": {
+          "autoincrement": false,
+          "name": "ProductCategory",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ShelfNumber": {
+          "autoincrement": false,
+          "name": "ShelfNumber",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Notes": {
+          "autoincrement": false,
+          "name": "Notes",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "PiecesSewn": {
+          "autoincrement": false,
+          "name": "PiecesSewn",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ExternalId": {
+          "autoincrement": false,
+          "name": "ExternalId",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "OnDemandProductSKU": {
+          "autoincrement": false,
+          "name": "OnDemandProductSKU",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ThreadPalette": {
+          "autoincrement": false,
+          "name": "ThreadPalette",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "UserDefinedName": {
+          "autoincrement": false,
+          "name": "UserDefinedName",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Session": {
+          "autoincrement": false,
+          "name": "Session",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "UserDisplayedWidth": {
+          "autoincrement": false,
+          "name": "UserDisplayedWidth",
+          "type": "double",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "UserDisplayedHeight": {
+          "autoincrement": false,
+          "name": "UserDisplayedHeight",
+          "type": "double",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "MetaData": {
+          "autoincrement": false,
+          "name": "MetaData",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "orders_OrderId": {
+          "name": "orders_OrderId",
+          "columns": [
+            "OrderId"
+          ]
+        }
+      },
+      "indexes": {
+        "GroupOrderID": {
+          "name": "GroupOrderID",
+          "columns": [
+            "GroupOrderID"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "GroupOrder_Orders": {
+          "name": "GroupOrder_Orders",
+          "tableFrom": "orders",
+          "tableTo": "grouporders",
+          "columnsFrom": [
+            "GroupOrderID"
+          ],
+          "columnsTo": [
+            "Id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {
+        "OrderId": {
+          "name": "OrderId",
+          "columns": [
+            "OrderId"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "productelementcolours": {
+      "name": "productelementcolours",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ProductElementId": {
+          "autoincrement": false,
+          "name": "ProductElementId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ColourId": {
+          "autoincrement": false,
+          "name": "ColourId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "productelementcolours_Id": {
+          "name": "productelementcolours_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {
+        "ColourId": {
+          "name": "ColourId",
+          "columns": [
+            "ColourId"
+          ],
+          "isUnique": false
+        },
+        "ProductElementId": {
+          "name": "ProductElementId",
+          "columns": [
+            "ProductElementId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "ProductElementColour_Colour": {
+          "name": "ProductElementColour_Colour",
+          "tableFrom": "productelementcolours",
+          "tableTo": "colours",
+          "columnsFrom": [
+            "ColourId"
+          ],
+          "columnsTo": [
+            "ColourId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "ProductElement_ProductElementColours": {
+          "name": "ProductElement_ProductElementColours",
+          "tableFrom": "productelementcolours",
+          "tableTo": "productelements",
+          "columnsFrom": [
+            "ProductElementId"
+          ],
+          "columnsTo": [
+            "Id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "productelements": {
+      "name": "productelements",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ElementName": {
+          "autoincrement": false,
+          "name": "ElementName",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IsAllColors": {
+          "autoincrement": false,
+          "name": "IsAllColors",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ProductId": {
+          "autoincrement": false,
+          "name": "ProductId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "productelements_Id": {
+          "name": "productelements_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "settings": {
+      "name": "settings",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Name": {
+          "autoincrement": false,
+          "name": "Name",
+          "type": "varchar(80)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Value": {
+          "autoincrement": false,
+          "name": "Value",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "IsCompanyDependent": {
+          "autoincrement": false,
+          "name": "IsCompanyDependent",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IsDirectory": {
+          "autoincrement": false,
+          "name": "IsDirectory",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Discriminator": {
+          "autoincrement": false,
+          "name": "Discriminator",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "settings_Id": {
+          "name": "settings_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "shifts": {
+      "name": "shifts",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ShiftName": {
+          "autoincrement": false,
+          "name": "ShiftName",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "StartHour": {
+          "autoincrement": false,
+          "name": "StartHour",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "StartMinute": {
+          "autoincrement": false,
+          "name": "StartMinute",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "EndHour": {
+          "autoincrement": false,
+          "name": "EndHour",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "EndMinute": {
+          "autoincrement": false,
+          "name": "EndMinute",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ShiftSequence": {
+          "autoincrement": false,
+          "name": "ShiftSequence",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "LastModifiedDate": {
+          "autoincrement": false,
+          "name": "LastModifiedDate",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CompanyId": {
+          "autoincrement": false,
+          "name": "CompanyId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "shifts_Id": {
+          "name": "shifts_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "stopheads": {
+      "name": "stopheads",
+      "columns": {
+        "StopHeadsId": {
+          "autoincrement": true,
+          "name": "StopHeadsId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "EventLogId": {
+          "autoincrement": false,
+          "name": "EventLogId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Heads": {
+          "autoincrement": false,
+          "name": "Heads",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "BreakPosition": {
+          "autoincrement": false,
+          "name": "BreakPosition",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "stopheads_StopHeadsId": {
+          "name": "stopheads_StopHeadsId",
+          "columns": [
+            "StopHeadsId"
+          ]
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "stylecolors": {
+      "name": "stylecolors",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "StyleId": {
+          "autoincrement": false,
+          "name": "StyleId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ColorId": {
+          "autoincrement": false,
+          "name": "ColorId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "Colour_Id": {
+          "autoincrement": false,
+          "name": "Colour_Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {
+        "stylecolors_Id": {
+          "name": "stylecolors_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {
+        "Colour_Id": {
+          "name": "Colour_Id",
+          "columns": [
+            "Colour_Id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "StyleColor_Colour": {
+          "name": "StyleColor_Colour",
+          "tableFrom": "stylecolors",
+          "tableTo": "colours",
+          "columnsFrom": [
+            "Colour_Id"
+          ],
+          "columnsTo": [
+            "ColourId"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "usermachinefeatures": {
+      "name": "usermachinefeatures",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "DisabledFeatures": {
+          "autoincrement": false,
+          "name": "DisabledFeatures",
+          "type": "longtext",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "UserId": {
+          "autoincrement": false,
+          "name": "UserId",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "usermachinefeatures_Id": {
+          "name": "usermachinefeatures_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {
+        "UserId": {
+          "name": "UserId",
+          "columns": [
+            "UserId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "IdentityUser_DisabledFeatures": {
+          "name": "IdentityUser_DisabledFeatures",
+          "tableFrom": "usermachinefeatures",
+          "tableTo": "aspnetusers",
+          "columnsFrom": [
+            "UserId"
+          ],
+          "columnsTo": [
+            "Id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "workflowaudits": {
+      "name": "workflowaudits",
+      "columns": {
+        "Id": {
+          "autoincrement": true,
+          "name": "Id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "OrderId": {
+          "autoincrement": false,
+          "name": "OrderId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "LogoPlacement": {
+          "autoincrement": false,
+          "name": "LogoPlacement",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "LogoStraight": {
+          "autoincrement": false,
+          "name": "LogoStraight",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ThreadColors": {
+          "autoincrement": false,
+          "name": "ThreadColors",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Registration": {
+          "autoincrement": false,
+          "name": "Registration",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Completeness": {
+          "autoincrement": false,
+          "name": "Completeness",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "LooseThread": {
+          "autoincrement": false,
+          "name": "LooseThread",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Backing": {
+          "autoincrement": false,
+          "name": "Backing",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "NoHoles": {
+          "autoincrement": false,
+          "name": "NoHoles",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "Solvent": {
+          "autoincrement": false,
+          "name": "Solvent",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {
+        "workflowaudits_Id": {
+          "name": "workflowaudits_Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "indexes": {
+        "OrderId": {
+          "name": "OrderId",
+          "columns": [
+            "OrderId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "WorkflowAudit_Orders": {
+          "name": "WorkflowAudit_Orders",
+          "tableFrom": "workflowaudits",
+          "tableTo": "orders",
+          "columnsFrom": [
+            "OrderId"
+          ],
+          "columnsTo": [
+            "OrderId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "uniqueConstraints": {
+        "Id": {
+          "name": "Id",
+          "columns": [
+            "Id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    }
+  },
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {},
+    "indexes": {}
+  }
+}
