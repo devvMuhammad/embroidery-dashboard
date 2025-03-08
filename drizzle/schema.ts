@@ -1,5 +1,4 @@
-import { mysqlTable, mysqlSchema, AnyMySqlColumn, primaryKey, varchar, foreignKey, int, longtext, datetime, unique, index, tinyint, float, smallint, double, bigint } from "drizzle-orm/mysql-core"
-import { sql } from "drizzle-orm"
+import { mysqlTable, primaryKey, varchar, int, longtext, datetime, unique, index, tinyint, float, smallint, double, bigint } from "drizzle-orm/mysql-core"
 
 export const migrationhistory = mysqlTable("__migrationhistory", {
 	migrationId: varchar("Migration_ID", { length: 100 }).notNull(),
@@ -8,9 +7,9 @@ export const migrationhistory = mysqlTable("__migrationhistory", {
 	// longblobType: longblob("Model").notNull(),
 	productVersion: varchar("ProductVersion", { length: 32 }).notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.migrationId, table.contextKey], name: "__migrationhistory_Migration_ID_Context_Key"}),
-]);
+	(table) => [
+		primaryKey({ columns: [table.migrationId, table.contextKey], name: "__migrationhistory_Migration_ID_Context_Key" }),
+	]);
 
 export const aspnetrestrictions = mysqlTable("aspnetrestrictions", {
 	id: varchar("Id", { length: 128 }).notNull(),
@@ -19,17 +18,17 @@ export const aspnetrestrictions = mysqlTable("aspnetrestrictions", {
 	selected: tinyint("Selected"),
 	discriminator: varchar("Discriminator", { length: 128 }).notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.id], name: "aspnetrestrictions_Id"}),
-]);
+	(table) => [
+		primaryKey({ columns: [table.id], name: "aspnetrestrictions_Id" }),
+	]);
 
 export const aspnetrolerestrictions = mysqlTable("aspnetrolerestrictions", {
-	roleId: varchar("RoleId", { length: 128 }).notNull().references(() => aspnetroles.id, { onDelete: "cascade" } ),
-	restrictionId: varchar("RestrictionId", { length: 128 }).notNull().references(() => aspnetrestrictions.id, { onDelete: "cascade" } ),
+	roleId: varchar("RoleId", { length: 128 }).notNull().references(() => aspnetroles.id, { onDelete: "cascade" }),
+	restrictionId: varchar("RestrictionId", { length: 128 }).notNull().references(() => aspnetrestrictions.id, { onDelete: "cascade" }),
 },
-(table) => [
-	primaryKey({ columns: [table.roleId, table.restrictionId], name: "aspnetrolerestrictions_RoleId_RestrictionId"}),
-]);
+	(table) => [
+		primaryKey({ columns: [table.roleId, table.restrictionId], name: "aspnetrolerestrictions_RoleId_RestrictionId" }),
+	]);
 
 export const aspnetroles = mysqlTable("aspnetroles", {
 	id: varchar("Id", { length: 128 }).notNull(),
@@ -37,25 +36,25 @@ export const aspnetroles = mysqlTable("aspnetroles", {
 	isSystemProtected: tinyint("IsSystemProtected").notNull(),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.id], name: "aspnetroles_Id"}),
-]);
+	(table) => [
+		primaryKey({ columns: [table.id], name: "aspnetroles_Id" }),
+	]);
 
 export const aspnetusermachines = mysqlTable("aspnetusermachines", {
-	userId: varchar("UserId", { length: 128 }).notNull().references(() => aspnetusers.id, { onDelete: "cascade" } ),
-	machineId: int("MachineId").notNull().references(() => machines.machineId, { onDelete: "cascade" } ),
+	userId: varchar("UserId", { length: 128 }).notNull().references(() => aspnetusers.id, { onDelete: "cascade" }),
+	machineId: int("MachineId").notNull().references(() => machines.machineId, { onDelete: "cascade" }),
 },
-(table) => [
-	primaryKey({ columns: [table.userId, table.machineId], name: "aspnetusermachines_UserId_MachineId"}),
-]);
+	(table) => [
+		primaryKey({ columns: [table.userId, table.machineId], name: "aspnetusermachines_UserId_MachineId" }),
+	]);
 
 export const aspnetuserroles = mysqlTable("aspnetuserroles", {
-	userId: varchar("UserId", { length: 128 }).notNull().references(() => aspnetusers.id, { onDelete: "cascade" } ),
-	roleId: varchar("RoleId", { length: 128 }).notNull().references(() => aspnetroles.id, { onDelete: "cascade" } ),
+	userId: varchar("UserId", { length: 128 }).notNull().references(() => aspnetusers.id, { onDelete: "cascade" }),
+	roleId: varchar("RoleId", { length: 128 }).notNull().references(() => aspnetroles.id, { onDelete: "cascade" }),
 },
-(table) => [
-	primaryKey({ columns: [table.userId, table.roleId], name: "aspnetuserroles_UserId_RoleId"}),
-]);
+	(table) => [
+		primaryKey({ columns: [table.userId, table.roleId], name: "aspnetuserroles_UserId_RoleId" }),
+	]);
 
 export const aspnetusers = mysqlTable("aspnetusers", {
 	id: varchar("Id", { length: 128 }).notNull(),
@@ -66,16 +65,16 @@ export const aspnetusers = mysqlTable("aspnetusers", {
 	phoneNumber: longtext("PhoneNumber"),
 	phoneNumberConfirmed: tinyint("PhoneNumberConfirmed").notNull(),
 	twoFactorEnabled: tinyint("TwoFactorEnabled").notNull(),
-	lockoutEndDateUtc: datetime("LockoutEndDateUtc", { mode: 'string'}),
+	lockoutEndDateUtc: datetime("LockoutEndDateUtc", { mode: 'string' }),
 	lockoutEnabled: tinyint("LockoutEnabled").notNull(),
 	accessFailedCount: int("AccessFailedCount").notNull(),
 	userName: varchar("UserName", { length: 256 }).notNull(),
 	companyId: int("CompanyId").notNull(),
-	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string'}),
+	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string' }),
 },
-(table) => [
-	primaryKey({ columns: [table.id], name: "aspnetusers_Id"}),
-]);
+	(table) => [
+		primaryKey({ columns: [table.id], name: "aspnetusers_Id" }),
+	]);
 
 export const brotherinkreports = mysqlTable("brotherinkreports", {
 	id: int("Id").autoincrement().notNull(),
@@ -84,7 +83,7 @@ export const brotherinkreports = mysqlTable("brotherinkreports", {
 	printer: longtext("Printer"),
 	machineMode: int("MachineMode").notNull(),
 	imageFile: longtext("ImageFile"),
-	createdDateUtc: datetime("CreatedDateUtc", { mode: 'string'}).notNull(),
+	createdDateUtc: datetime("CreatedDateUtc", { mode: 'string' }).notNull(),
 	platenSize: longtext("PlatenSize"),
 	resolution: int("Resolution").notNull(),
 	inkCombination: int("InkCombination").notNull(),
@@ -116,24 +115,24 @@ export const brotherinkreports = mysqlTable("brotherinkreports", {
 	copies: int("Copies").notNull(),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.id], name: "brotherinkreports_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		primaryKey({ columns: [table.id], name: "brotherinkreports_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const colorprofileprinters = mysqlTable("colorprofileprinters", {
 	id: int("Id").autoincrement().notNull(),
-	colorProfileId: int("ColorProfileID").notNull().references(() => colorprofiles.id, { onDelete: "cascade" } ),
+	colorProfileId: int("ColorProfileID").notNull().references(() => colorprofiles.id, { onDelete: "cascade" }),
 	printerId: int("PrinterID").notNull(),
 	filePath: longtext("FilePath"),
 	subfolderPath: longtext("SubfolderPath"),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	index("ColorProfileID").on(table.colorProfileId),
-	primaryKey({ columns: [table.id], name: "colorprofileprinters_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		index("ColorProfileID").on(table.colorProfileId),
+		primaryKey({ columns: [table.id], name: "colorprofileprinters_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const colorprofiles = mysqlTable("colorprofiles", {
 	id: int("Id").autoincrement().notNull(),
@@ -142,10 +141,10 @@ export const colorprofiles = mysqlTable("colorprofiles", {
 	subFolderPath: longtext("SubFolderPath"),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.id], name: "colorprofiles_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		primaryKey({ columns: [table.id], name: "colorprofiles_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const colours = mysqlTable("colours", {
 	colourId: int("ColourId").autoincrement().notNull(),
@@ -157,17 +156,17 @@ export const colours = mysqlTable("colours", {
 	blue: tinyint("Blue", { unsigned: true }).notNull(),
 	active: tinyint("Active"),
 	source: longtext("Source"),
-	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string'}),
+	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string' }),
 	cloudColourId: int("CloudColourId"),
 	defaultColorProfileId: int("DefaultColorProfileId").references(() => colorprofiles.id),
 	colourType: longtext("ColourType"),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	index("DefaultColorProfileId").on(table.defaultColorProfileId),
-	primaryKey({ columns: [table.colourId], name: "colours_ColourId"}),
-	unique("ColourId").on(table.colourId),
-]);
+	(table) => [
+		index("DefaultColorProfileId").on(table.defaultColorProfileId),
+		primaryKey({ columns: [table.colourId], name: "colours_ColourId" }),
+		unique("ColourId").on(table.colourId),
+	]);
 
 export const designstatisticsv2 = mysqlTable("designstatisticsv2", {
 	id: int("Id").autoincrement().notNull(),
@@ -185,17 +184,17 @@ export const designstatisticsv2 = mysqlTable("designstatisticsv2", {
 	needleSequence: int("NeedleSequence").notNull(),
 	threads: varchar("Threads", { length: 8000 }).notNull(),
 	job: varchar("Job", { length: 255 }).notNull(),
-	createdOrUpdatedDate: datetime("CreatedOrUpdatedDate", { mode: 'string'}),
+	createdOrUpdatedDate: datetime("CreatedOrUpdatedDate", { mode: 'string' }),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.id], name: "designstatisticsv2_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		primaryKey({ columns: [table.id], name: "designstatisticsv2_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const eventlogs = mysqlTable("eventlogs", {
 	eventLogId: int("EventLogId").autoincrement().notNull(),
-	eventDateTime: datetime("EventDateTime", { mode: 'string'}).notNull(),
+	eventDateTime: datetime("EventDateTime", { mode: 'string' }).notNull(),
 	eventType: varchar("EventType", { length: 50 }).notNull(),
 	job: varchar("Job", { length: 255 }),
 	userId: int("UserId"),
@@ -214,47 +213,47 @@ export const eventlogs = mysqlTable("eventlogs", {
 	productCategoryId: int("ProductCategoryId"),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.eventLogId], name: "eventlogs_EventLogId"}),
-	unique("EventLogId").on(table.eventLogId),
-]);
+	(table) => [
+		primaryKey({ columns: [table.eventLogId], name: "eventlogs_EventLogId" }),
+		unique("EventLogId").on(table.eventLogId),
+	]);
 
 export const grouporders = mysqlTable("grouporders", {
 	id: int("Id").autoincrement().notNull(),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.id], name: "grouporders_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		primaryKey({ columns: [table.id], name: "grouporders_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const lateboundsewingmessages = mysqlTable("lateboundsewingmessages", {
 	lateBoundSewingMessageId: int("LateBoundSewingMessageId").autoincrement().notNull(),
 	job: varchar("Job", { length: 255 }).notNull(),
 	beforeSewingMessage: varchar("BeforeSewingMessage", { length: 50 }),
 	afterSewingMessage: varchar("AfterSewingMessage", { length: 50 }),
-	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string'}),
+	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string' }),
 	cloudLateboundSewingMessageId: int("CloudLateboundSewingMessageId"),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.lateBoundSewingMessageId], name: "lateboundsewingmessages_LateBoundSewingMessageId"}),
-	unique("LateBoundSewingMessageId").on(table.lateBoundSewingMessageId),
-]);
+	(table) => [
+		primaryKey({ columns: [table.lateBoundSewingMessageId], name: "lateboundsewingmessages_LateBoundSewingMessageId" }),
+		unique("LateBoundSewingMessageId").on(table.lateBoundSewingMessageId),
+	]);
 
 export const machineneedles = mysqlTable("machineneedles", {
 	machineNeedleId: int("MachineNeedleId").autoincrement().notNull(),
-	machineId: int("MachineId").notNull().references(() => machines.machineId, { onDelete: "cascade" } ),
+	machineId: int("MachineId").notNull().references(() => machines.machineId, { onDelete: "cascade" }),
 	needleNumber: smallint("NeedleNumber").notNull(),
 	colourId: int("ColourId").references(() => colours.colourId),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	index("ColourId").on(table.colourId),
-	index("MachineId").on(table.machineId),
-	primaryKey({ columns: [table.machineNeedleId], name: "machineneedles_MachineNeedleId"}),
-	unique("MachineNeedleId").on(table.machineNeedleId),
-]);
+	(table) => [
+		index("ColourId").on(table.colourId),
+		index("MachineId").on(table.machineId),
+		primaryKey({ columns: [table.machineNeedleId], name: "machineneedles_MachineNeedleId" }),
+		unique("MachineNeedleId").on(table.machineNeedleId),
+	]);
 
 export const machines = mysqlTable("machines", {
 	machineId: int("MachineId").autoincrement().notNull(),
@@ -264,7 +263,7 @@ export const machines = mysqlTable("machines", {
 	description: varchar("Description", { length: 45 }),
 	possibleStitches: int("PossibleStitches"),
 	numberOfHeads: int("NumberOfHeads"),
-	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string'}),
+	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string' }),
 	cloudMachineId: int("CloudMachineId"),
 	active: tinyint("Active"),
 	alias: longtext("Alias"),
@@ -289,10 +288,10 @@ export const machines = mysqlTable("machines", {
 	tajimaConnectPassword: varchar("TajimaConnectPassword", { length: 45 }),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.machineId], name: "machines_MachineId"}),
-	unique("MachineId").on(table.machineId),
-]);
+	(table) => [
+		primaryKey({ columns: [table.machineId], name: "machines_MachineId" }),
+		unique("MachineId").on(table.machineId),
+	]);
 
 export const mcerrorcategories = mysqlTable("mcerrorcategories", {
 	mcErrorCategoriesId: int("McErrorCategoriesId").autoincrement().notNull(),
@@ -300,41 +299,41 @@ export const mcerrorcategories = mysqlTable("mcerrorcategories", {
 	parentId: int("ParentId"),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.mcErrorCategoriesId], name: "mcerrorcategories_McErrorCategoriesId"}),
-	unique("McErrorCategoriesId").on(table.mcErrorCategoriesId),
-]);
+	(table) => [
+		primaryKey({ columns: [table.mcErrorCategoriesId], name: "mcerrorcategories_McErrorCategoriesId" }),
+		unique("McErrorCategoriesId").on(table.mcErrorCategoriesId),
+	]);
 
 export const mcerrorcodes = mysqlTable("mcerrorcodes", {
 	mcErrorCodeId: int("McErrorCodeId").autoincrement().notNull(),
 	code: int("Code").notNull(),
 	message: varchar("Message", { length: 300 }).notNull(),
 	severity: int("Severity").notNull(),
-	categoryId: int("CategoryId").notNull().references(() => mcerrorcategories.mcErrorCategoriesId, { onDelete: "cascade" } ),
+	categoryId: int("CategoryId").notNull().references(() => mcerrorcategories.mcErrorCategoriesId, { onDelete: "cascade" }),
 	parameters: varchar("Parameters", { length: 80 }),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	index("CategoryId").on(table.categoryId),
-	primaryKey({ columns: [table.mcErrorCodeId], name: "mcerrorcodes_McErrorCodeId"}),
-	unique("McErrorCodeId").on(table.mcErrorCodeId),
-]);
+	(table) => [
+		index("CategoryId").on(table.categoryId),
+		primaryKey({ columns: [table.mcErrorCodeId], name: "mcerrorcodes_McErrorCodeId" }),
+		unique("McErrorCodeId").on(table.mcErrorCodeId),
+	]);
 
 export const mcerrorlog = mysqlTable("mcerrorlog", {
 	mcErrorLogId: int("McErrorLogId").autoincrement().notNull(),
-	dateTime: datetime("DateTime", { mode: 'string'}).notNull(),
+	dateTime: datetime("DateTime", { mode: 'string' }).notNull(),
 	machineId: int("MachineId").references(() => machines.machineId),
-	codeId: int("CodeId").notNull().references(() => mcerrorcodes.mcErrorCodeId, { onDelete: "cascade" } ),
+	codeId: int("CodeId").notNull().references(() => mcerrorcodes.mcErrorCodeId, { onDelete: "cascade" }),
 	parameters: varchar("Parameters", { length: 80 }),
 	isSync: tinyint("IsSync"),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	index("CodeId").on(table.codeId),
-	index("MachineId").on(table.machineId),
-	primaryKey({ columns: [table.mcErrorLogId], name: "mcerrorlog_McErrorLogId"}),
-	unique("McErrorLogId").on(table.mcErrorLogId),
-]);
+	(table) => [
+		index("CodeId").on(table.codeId),
+		index("MachineId").on(table.machineId),
+		primaryKey({ columns: [table.mcErrorLogId], name: "mcerrorlog_McErrorLogId" }),
+		unique("McErrorLogId").on(table.mcErrorLogId),
+	]);
 
 export const mcmachinecategory = mysqlTable("mcmachinecategory", {
 	mcMachineCategoryId: int("McMachineCategoryId").autoincrement().notNull(),
@@ -342,10 +341,10 @@ export const mcmachinecategory = mysqlTable("mcmachinecategory", {
 	productCategoryId: int("ProductCategoryId").notNull(),
 	isSync: tinyint("IsSync"),
 },
-(table) => [
-	primaryKey({ columns: [table.mcMachineCategoryId], name: "mcmachinecategory_McMachineCategoryId"}),
-	unique("McMachineCategoryId").on(table.mcMachineCategoryId),
-]);
+	(table) => [
+		primaryKey({ columns: [table.mcMachineCategoryId], name: "mcmachinecategory_McMachineCategoryId" }),
+		unique("McMachineCategoryId").on(table.mcMachineCategoryId),
+	]);
 
 export const mcversionings = mysqlTable("mcversionings", {
 	versioningId: int("VersioningId").autoincrement().notNull(),
@@ -354,53 +353,53 @@ export const mcversionings = mysqlTable("mcversionings", {
 	isSync: tinyint("IsSync"),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.versioningId], name: "mcversionings_VersioningId"}),
-	unique("VersioningId").on(table.versioningId),
-]);
+	(table) => [
+		primaryKey({ columns: [table.versioningId], name: "mcversionings_VersioningId" }),
+		unique("VersioningId").on(table.versioningId),
+	]);
 
 export const messageofthedays = mysqlTable("messageofthedays", {
 	id: int("Id").autoincrement().notNull(),
-	startDate: datetime("StartDate", { mode: 'string'}).notNull(),
-	endDate: datetime("EndDate", { mode: 'string'}).notNull(),
+	startDate: datetime("StartDate", { mode: 'string' }).notNull(),
+	endDate: datetime("EndDate", { mode: 'string' }).notNull(),
 	message: varchar("Message", { length: 255 }).notNull(),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.id], name: "messageofthedays_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		primaryKey({ columns: [table.id], name: "messageofthedays_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const needlecolours = mysqlTable("needlecolours", {
 	needleColourId: int("NeedleColourId").autoincrement().notNull(),
 	needleNumber: smallint("NeedleNumber").notNull(),
 	colourId: int("ColourId").references(() => colours.colourId),
-	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string'}),
+	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string' }),
 	cloudNeedleColourId: int("CloudNeedleColourId"),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	index("ColourId").on(table.colourId),
-	primaryKey({ columns: [table.needleColourId], name: "needlecolours_NeedleColourId"}),
-	unique("NeedleColourId").on(table.needleColourId),
-]);
+	(table) => [
+		index("ColourId").on(table.colourId),
+		primaryKey({ columns: [table.needleColourId], name: "needlecolours_NeedleColourId" }),
+		unique("NeedleColourId").on(table.needleColourId),
+	]);
 
 export const nestingorders = mysqlTable("nestingorders", {
 	id: int("Id").autoincrement().notNull(),
-	orderId: int("OrderId").notNull().references(() => orders.orderId, { onDelete: "cascade" } ),
-	nestingId: int("NestingId").notNull().references(() => nestings.id, { onDelete: "cascade" } ),
+	orderId: int("OrderId").notNull().references(() => orders.orderId, { onDelete: "cascade" }),
+	nestingId: int("NestingId").notNull().references(() => nestings.id, { onDelete: "cascade" }),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	index("NestingId").on(table.nestingId),
-	index("OrderId").on(table.orderId),
-	primaryKey({ columns: [table.id], name: "nestingorders_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		index("NestingId").on(table.nestingId),
+		index("OrderId").on(table.orderId),
+		primaryKey({ columns: [table.id], name: "nestingorders_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const nestings = mysqlTable("nestings", {
 	id: int("Id").autoincrement().notNull(),
-	releasedDate: datetime("ReleasedDate", { mode: 'string'}).notNull(),
+	releasedDate: datetime("ReleasedDate", { mode: 'string' }).notNull(),
 	mediaType: longtext("MediaType"),
 	status: longtext("Status"),
 	profile: longtext("Profile"),
@@ -410,10 +409,10 @@ export const nestings = mysqlTable("nestings", {
 	batchComments: longtext("BatchComments"),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.id], name: "nestings_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		primaryKey({ columns: [table.id], name: "nestings_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const operators = mysqlTable("operators", {
 	operatorId: int("OperatorId").autoincrement().notNull(),
@@ -425,47 +424,47 @@ export const operators = mysqlTable("operators", {
 	phoneNumber: longtext("PhoneNumber"),
 	supervisorName: longtext("SupervisorName"),
 	cannedMessages: longtext("CannedMessages"),
-	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string'}),
+	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string' }),
 	cloudOperatorId: int("CloudOperatorId"),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.operatorId], name: "operators_OperatorId"}),
-	unique("OperatorId").on(table.operatorId),
-]);
+	(table) => [
+		primaryKey({ columns: [table.operatorId], name: "operators_OperatorId" }),
+		unique("OperatorId").on(table.operatorId),
+	]);
 
 export const orderitems = mysqlTable("orderitems", {
 	id: int("Id").autoincrement().notNull(),
-	orderId: int("OrderId").notNull().references(() => orders.orderId, { onDelete: "cascade" } ),
+	orderId: int("OrderId").notNull().references(() => orders.orderId, { onDelete: "cascade" }),
 	number: int("Number").notNull(),
 	status: longtext("Status"),
 	trackingNumber: longtext("TrackingNumber"),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	index("OrderId").on(table.orderId),
-	primaryKey({ columns: [table.id], name: "orderitems_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		index("OrderId").on(table.orderId),
+		primaryKey({ columns: [table.id], name: "orderitems_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const orderjsoninfoes = mysqlTable("orderjsoninfoes", {
 	id: int("Id").autoincrement().notNull(),
-	orderId: int("OrderId").notNull().references(() => orders.orderId, { onDelete: "cascade" } ),
+	orderId: int("OrderId").notNull().references(() => orders.orderId, { onDelete: "cascade" }),
 	jsonDetails: longtext("JsonDetails"),
 	productViewId: longtext("ProductViewId"),
 },
-(table) => [
-	index("OrderId").on(table.orderId),
-	primaryKey({ columns: [table.id], name: "orderjsoninfoes_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		index("OrderId").on(table.orderId),
+		primaryKey({ columns: [table.id], name: "orderjsoninfoes_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const orders = mysqlTable("orders", {
 	orderId: int("OrderId").autoincrement().notNull(),
 	job: varchar("Job", { length: 255 }).notNull(),
 	workPacketId: bigint("WorkPacketId", { mode: "number" }),
 	customerOrderNumber: longtext("CustomerOrderNumber"),
-	orderDate: datetime("OrderDate", { mode: 'string'}),
+	orderDate: datetime("OrderDate", { mode: 'string' }),
 	productCode: longtext("ProductCode"),
 	style: longtext("Style"),
 	styleName: longtext("StyleName"),
@@ -486,11 +485,11 @@ export const orders = mysqlTable("orders", {
 	status: varchar("Status", { length: 45 }).notNull(),
 	isBlacklistChecked: tinyint("IsBlacklistChecked").notNull(),
 	isManuallyCreated: tinyint("IsManuallyCreated").notNull(),
-	createdDate: datetime("CreatedDate", { mode: 'string'}).notNull(),
-	shipByDate: datetime("ShipByDate", { mode: 'string'}),
-	processedDate: datetime("ProcessedDate", { mode: 'string'}),
-	sewingDate: datetime("SewingDate", { mode: 'string'}),
-	completedDate: datetime("CompletedDate", { mode: 'string'}),
+	createdDate: datetime("CreatedDate", { mode: 'string' }).notNull(),
+	shipByDate: datetime("ShipByDate", { mode: 'string' }),
+	processedDate: datetime("ProcessedDate", { mode: 'string' }),
+	sewingDate: datetime("SewingDate", { mode: 'string' }),
+	completedDate: datetime("CompletedDate", { mode: 'string' }),
 	isDeleted: tinyint("IsDeleted").notNull(),
 	orderType: longtext("OrderType"),
 	customerName: longtext("CustomerName"),
@@ -501,7 +500,7 @@ export const orders = mysqlTable("orders", {
 	isEmailSent: tinyint("IsEmailSent"),
 	productSize: longtext("ProductSize"),
 	cloudOrderId: int("CloudOrderId"),
-	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string'}),
+	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string' }),
 	viewId: int("ViewId"),
 	viewInfo: longtext("ViewInfo"),
 	locId: int("LocId"),
@@ -567,8 +566,8 @@ export const orders = mysqlTable("orders", {
 	productName: longtext("ProductName"),
 	productSku: longtext("ProductSKU"),
 	salesOrderNumber: longtext("SalesOrderNumber"),
-	dateOrdered: datetime("DateOrdered", { mode: 'string'}),
-	orderDue: datetime("OrderDue", { mode: 'string'}),
+	dateOrdered: datetime("DateOrdered", { mode: 'string' }),
+	orderDue: datetime("OrderDue", { mode: 'string' }),
 	borderColor: longtext("BorderColor"),
 	sku: longtext("SKU"),
 	description: longtext("Description"),
@@ -588,23 +587,23 @@ export const orders = mysqlTable("orders", {
 	metaData: longtext("MetaData"),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	index("GroupOrderID").on(table.groupOrderId),
-	primaryKey({ columns: [table.orderId], name: "orders_OrderId"}),
-	unique("OrderId").on(table.orderId),
-]);
+	(table) => [
+		index("GroupOrderID").on(table.groupOrderId),
+		primaryKey({ columns: [table.orderId], name: "orders_OrderId" }),
+		unique("OrderId").on(table.orderId),
+	]);
 
 export const productelementcolours = mysqlTable("productelementcolours", {
 	id: int("Id").autoincrement().notNull(),
-	productElementId: int("ProductElementId").notNull().references(() => productelements.id, { onDelete: "cascade" } ),
-	colourId: int("ColourId").notNull().references(() => colours.colourId, { onDelete: "cascade" } ),
+	productElementId: int("ProductElementId").notNull().references(() => productelements.id, { onDelete: "cascade" }),
+	colourId: int("ColourId").notNull().references(() => colours.colourId, { onDelete: "cascade" }),
 },
-(table) => [
-	index("ColourId").on(table.colourId),
-	index("ProductElementId").on(table.productElementId),
-	primaryKey({ columns: [table.id], name: "productelementcolours_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		index("ColourId").on(table.colourId),
+		index("ProductElementId").on(table.productElementId),
+		primaryKey({ columns: [table.id], name: "productelementcolours_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const productelements = mysqlTable("productelements", {
 	id: int("Id").autoincrement().notNull(),
@@ -612,10 +611,10 @@ export const productelements = mysqlTable("productelements", {
 	isAllColors: tinyint("IsAllColors").notNull(),
 	productId: int("ProductId").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.id], name: "productelements_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		primaryKey({ columns: [table.id], name: "productelements_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const settings = mysqlTable("settings", {
 	id: int("Id").autoincrement().notNull(),
@@ -626,10 +625,10 @@ export const settings = mysqlTable("settings", {
 	isDirectory: tinyint("IsDirectory"),
 	discriminator: varchar("Discriminator", { length: 128 }).notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.id], name: "settings_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		primaryKey({ columns: [table.id], name: "settings_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const shifts = mysqlTable("shifts", {
 	id: int("Id").autoincrement().notNull(),
@@ -639,13 +638,13 @@ export const shifts = mysqlTable("shifts", {
 	endHour: smallint("EndHour").notNull(),
 	endMinute: smallint("EndMinute").notNull(),
 	shiftSequence: int("ShiftSequence").notNull(),
-	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string'}),
+	lastModifiedDate: datetime("LastModifiedDate", { mode: 'string' }),
 	companyId: int("CompanyId").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.id], name: "shifts_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		primaryKey({ columns: [table.id], name: "shifts_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const stopheads = mysqlTable("stopheads", {
 	stopHeadsId: int("StopHeadsId").autoincrement().notNull(),
@@ -653,9 +652,9 @@ export const stopheads = mysqlTable("stopheads", {
 	heads: varchar("Heads", { length: 200 }),
 	breakPosition: int("BreakPosition").notNull(),
 },
-(table) => [
-	primaryKey({ columns: [table.stopHeadsId], name: "stopheads_StopHeadsId"}),
-]);
+	(table) => [
+		primaryKey({ columns: [table.stopHeadsId], name: "stopheads_StopHeadsId" }),
+	]);
 
 export const stylecolors = mysqlTable("stylecolors", {
 	id: int("Id").autoincrement().notNull(),
@@ -663,26 +662,26 @@ export const stylecolors = mysqlTable("stylecolors", {
 	colorId: int("ColorId"),
 	colourId: int("Colour_Id").references(() => colours.colourId),
 },
-(table) => [
-	index("Colour_Id").on(table.colourId),
-	primaryKey({ columns: [table.id], name: "stylecolors_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		index("Colour_Id").on(table.colourId),
+		primaryKey({ columns: [table.id], name: "stylecolors_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const usermachinefeatures = mysqlTable("usermachinefeatures", {
 	id: int("Id").autoincrement().notNull(),
 	disabledFeatures: longtext("DisabledFeatures"),
 	userId: varchar("UserId", { length: 128 }).notNull().references(() => aspnetusers.id),
 },
-(table) => [
-	index("UserId").on(table.userId),
-	primaryKey({ columns: [table.id], name: "usermachinefeatures_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		index("UserId").on(table.userId),
+		primaryKey({ columns: [table.id], name: "usermachinefeatures_Id" }),
+		unique("Id").on(table.id),
+	]);
 
 export const workflowaudits = mysqlTable("workflowaudits", {
 	id: int("Id").autoincrement().notNull(),
-	orderId: int("OrderId").notNull().references(() => orders.orderId, { onDelete: "cascade" } ),
+	orderId: int("OrderId").notNull().references(() => orders.orderId, { onDelete: "cascade" }),
 	logoPlacement: tinyint("LogoPlacement").notNull(),
 	logoStraight: tinyint("LogoStraight").notNull(),
 	threadColors: tinyint("ThreadColors").notNull(),
@@ -693,8 +692,8 @@ export const workflowaudits = mysqlTable("workflowaudits", {
 	noHoles: tinyint("NoHoles").notNull(),
 	solvent: tinyint("Solvent").notNull(),
 },
-(table) => [
-	index("OrderId").on(table.orderId),
-	primaryKey({ columns: [table.id], name: "workflowaudits_Id"}),
-	unique("Id").on(table.id),
-]);
+	(table) => [
+		index("OrderId").on(table.orderId),
+		primaryKey({ columns: [table.id], name: "workflowaudits_Id" }),
+		unique("Id").on(table.id),
+	]);
