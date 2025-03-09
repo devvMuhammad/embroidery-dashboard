@@ -1,5 +1,5 @@
 import EmbroideryDashboard from "./components/embroidery-dashboard";
 
 export default function Page() {
-  return <EmbroideryDashboard />
+  return <EmbroideryDashboard mode="real" />
 }

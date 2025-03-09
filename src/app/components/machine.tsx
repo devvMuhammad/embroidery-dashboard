@@ -14,6 +14,8 @@ type MachineData = {
   machineName: string;
   operator: string | null;
   headCount: number | null;
+  dailyGoal: number;
+  initialTotalStitchCount: number;
 };
 
 type EventLog = {
@@ -32,26 +34,22 @@ type MachineCardProps = {
 export default function MachineCard({ machineData, eventLogs }: MachineCardProps) {
   const [machineState, setMachineState] = useState<MachineState>({
     status: "stopped",
-    totalStitchCount: 0,
-    goal: 0,
+    totalStitchCount: machineData.initialTotalStitchCount || 0,
+    goal: machineData.dailyGoal || 0,
     lastUpdateTime: new Date(),
   });
-
-  // Initialize machine goal based on head count
-  useEffect(() => {
-    if (machineData && machineState.goal === 0) {
-      setMachineState(prevState => ({
-        ...prevState,
-        goal: (machineData.headCount as number) * 339,
-      }));
-    }
-  }, [machineData, machineState.goal]);
 
   // Process event logs when they arrive
   useEffect(() => {
     if (eventLogs && eventLogs.length > 0) {
       console.log(`Processing ${eventLogs.length} event logs for ${machineData.machineName}`);
       // Process each log with a delay to simulate real-time events
+      if (eventLogs.length > 12) {
+        eventLogs.forEach((eventLog: EventLog) => {
+          processEventLog(eventLog);
+        });
+        return;
+      }
       eventLogs.forEach((eventLog: EventLog, index: number) => {
         setTimeout(() => {
           processEventLog(eventLog);

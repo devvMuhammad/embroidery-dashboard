@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchLogs } from "@/app/test/action";
-import { fetchAllMachines } from "@/actions/idEventLogs";  // We'll create this action
+import { fetchAllMachines } from "@/actions/idEventLogs";
 
 // Function to format date objects to strings in the correct format
 function formatDateForDatabase(date: Date): string {
@@ -18,33 +18,51 @@ function formatDateForDatabase(date: Date): string {
 }
 
 type EventLogConfigProps = {
-  startDateString?: string;
+  startDate?: Date | string;
   interval?: number;
 };
 
-export function useEventLogs({ startDateString = "2025-02-11 18:05:32", interval = 60000 }: EventLogConfigProps) {
+export function useEventLogs({ startDate, interval = 60000 }: EventLogConfigProps) {
+  // Handle both Date objects and string inputs
+  const getFormattedStartDate = () => {
+    if (!startDate) {
+      // Default to 2025-02-11 if no startDate provided
+      return "2025-02-11 18:05:32";
+    }
 
-  // Calculate initial end time string
-  const initialEndTime = formatDateForDatabase(
-    new Date(new Date(startDateString).getTime() + interval)
-  );
+    if (typeof startDate === 'string') {
+      return startDate;
+    }
+
+    // If it's a Date object, format it
+    return formatDateForDatabase(startDate);
+  };
+
+  const formattedStartDate = getFormattedStartDate();
+
+  // Calculate initial end time
+  const getEndTime = (startTimeStr: string) => {
+    const startTime = new Date(startTimeStr.replace(' ', 'T'));
+    const endTime = new Date(startTime.getTime() + interval);
+    return formatDateForDatabase(endTime);
+  };
+
+  const initialEndTime = getEndTime(formattedStartDate);
 
   // Simplified state - store both times as formatted strings
   const [timeRange, setTimeRange] = useState({
-    startTimeString: startDateString,
+    startTimeString: formattedStartDate,
     endTimeString: initialEndTime
   });
 
-  // Update time range every minute
+  // Update time range every interval
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTimeRange(prev => {
         // Use the previous end time as the new start time
         const newStartTime = prev.endTimeString;
-
-        // Calculate new end time (1 minute after new start time)
-        const newEndDate = new Date(new Date(newStartTime).getTime() + interval);
-        const newEndTime = formatDateForDatabase(newEndDate);
+        // Calculate new end time (interval ms after new start time)
+        const newEndTime = getEndTime(newStartTime);
 
         return {
           startTimeString: newStartTime,
@@ -55,7 +73,7 @@ export function useEventLogs({ startDateString = "2025-02-11 18:05:32", interval
 
     return () => clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [interval]);
 
   // fetch all machines data
   const { data: machinesData, isPending: machinesLoading } = useQuery({
@@ -66,24 +84,24 @@ export function useEventLogs({ startDateString = "2025-02-11 18:05:32", interval
 
   // Use TanStack Query with the server action directly
   const { data: eventLogs, isPending: logsLoading, error, refetch } = useQuery({
-    queryKey: ['eventLogs'],
+    queryKey: ['eventLogs', timeRange.startTimeString, timeRange.endTimeString],
     queryFn: () => fetchLogs(timeRange.startTimeString, timeRange.endTimeString),
     refetchInterval: interval,
     refetchOnWindowFocus: false,
   });
 
-  // Reset time range to the specific starting date
+  // Reset time range to the initial starting date
   const resetTimeRange = () => {
     setTimeRange({
-      startTimeString: startDateString,
+      startTimeString: formattedStartDate,
       endTimeString: initialEndTime
     });
   };
 
   // Convert string dates to Date objects for display purposes
   const displayTimeRange = {
-    startTime: new Date(timeRange.startTimeString),
-    endTime: new Date(timeRange.endTimeString)
+    startTime: new Date(timeRange.startTimeString.replace(' ', 'T')),
+    endTime: new Date(timeRange.endTimeString.replace(' ', 'T'))
   };
 
   // Group event logs by machine

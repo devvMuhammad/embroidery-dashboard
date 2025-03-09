@@ -4,13 +4,9 @@ import OrdersTable from "./orders-table"
 import { useEventLogs } from "@/hooks/useEventLogs";
 import MachineCard from "./machine"
 
-export default function EmbroideryDashboard() {
-  const { machines, isLoading, eventLogsByMachine, currentTimeRange } = useEventLogs({ interval: 60 * 1000 });
+export default function EmbroideryDashboard({ mode }: { mode: "test" | "real" }) {
+  const { machines, eventLogsByMachine, currentTimeRange } = useEventLogs({ interval: 60 * 1000, startDate: mode === "real" ? new Date() : undefined });
   const [selectedView, setSelectedView] = useState<"dashboard" | "details">("dashboard");
-
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
 
   return (
     <div className="py-8 px-4">
