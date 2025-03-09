@@ -5,7 +5,7 @@ import { useEventLogs } from "@/hooks/useEventLogs";
 import MachineCard from "./machine"
 
 export default function EmbroideryDashboard() {
-  const { machines, isLoading, eventLogsByMachine, currentTimeRange } = useEventLogs({ interval: 1000 });
+  const { machines, isLoading, eventLogsByMachine, currentTimeRange } = useEventLogs({ interval: 60 * 1000 });
   const [selectedView, setSelectedView] = useState<"dashboard" | "details">("dashboard");
 
   if (isLoading) {
