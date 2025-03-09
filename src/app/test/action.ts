@@ -1,6 +1,6 @@
 "use server";
 import { db } from "@/db";
-import { and, asc, eq, sql } from "drizzle-orm";
+import { and, asc, sql } from "drizzle-orm";
 import { eventlogs } from "../../../drizzle/schema";
 
 // Accept strings rather than Date objects to avoid timezone issues
@@ -12,23 +12,24 @@ export async function fetchLogs(startDateString: string, endDateString: string) 
     const formattedStartDate = startDateString.replace('T', ' ').split('.')[0];
     const formattedEndDate = endDateString.replace('T', ' ').split('.')[0];
 
-    console.log("Formatted dates:", formattedStartDate, formattedEndDate);
-
     const logs = await db
-      .select()
+      .select({
+        eventLogId: eventlogs.eventLogId,
+        eventType: eventlogs.eventType,
+        machineName: eventlogs.machineName,
+        numStiches: eventlogs.numStitches,
+        eventDateTime: eventlogs.eventDateTime,
+      })
       .from(eventlogs)
       .where(
         and(
           // Use SQL expressions to compare dates exactly as strings
           sql`${eventlogs.eventDateTime} >= ${formattedStartDate}`,
-          sql`${eventlogs.eventDateTime} <= ${formattedEndDate}`,
-          eq(eventlogs.machineName, "TMAR-K1508C--03166")
+          sql`${eventlogs.eventDateTime} <= ${formattedEndDate}`
+          // Removed the machine name filter to get all machines
         )
       )
       .orderBy(asc(eventlogs.eventDateTime))
-      .limit(5);
-
-    console.log("logs", logs);
 
     return { data: logs };
   } catch (error) {

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchLogs } from "@/app/test/action";
+import { fetchAllMachines } from "@/actions/idEventLogs";  // We'll create this action
 
 // Function to format date objects to strings in the correct format
 function formatDateForDatabase(date: Date): string {
@@ -50,17 +51,24 @@ export function useEventLogs({ startDateString = "2025-02-11 18:05:32", interval
           endTimeString: newEndTime
         };
       });
-    }, interval); // Run every 60 seconds (1 minute)
+    }, interval);
 
     return () => clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // fetch all machines data
+  const { data: machinesData, isPending: machinesLoading } = useQuery({
+    queryKey: ['machines'],
+    queryFn: () => fetchAllMachines(),
+    refetchOnWindowFocus: false,
+  });
+
   // Use TanStack Query with the server action directly
-  const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ['eventLogs', timeRange.startTimeString, timeRange.endTimeString],
+  const { data: eventLogs, isPending: logsLoading, error, refetch } = useQuery({
+    queryKey: ['eventLogs'],
     queryFn: () => fetchLogs(timeRange.startTimeString, timeRange.endTimeString),
-    refetchInterval: interval, // Refetch every minute
+    refetchInterval: interval,
     refetchOnWindowFocus: false,
   });
 
@@ -78,9 +86,20 @@ export function useEventLogs({ startDateString = "2025-02-11 18:05:32", interval
     endTime: new Date(timeRange.endTimeString)
   };
 
+  // Group event logs by machine
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const eventLogsByMachine = eventLogs?.data?.reduce((grouped: any, log: any) => {
+    if (!grouped[log.machineName]) {
+      grouped[log.machineName] = [];
+    }
+    grouped[log.machineName].push(log);
+    return grouped;
+  }, {}) || {};
+
   return {
-    eventLogs: data?.data || [],
-    isLoading,
+    machines: machinesData?.data || [],
+    eventLogsByMachine,
+    isLoading: machinesLoading || logsLoading,
     error,
     refetch,
     currentTimeRange: displayTimeRange,

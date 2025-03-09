@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchMachinesWithEventLogs } from "@/actions/idEventLogs";
+import { fetchEventLogs, fetchMachine } from "@/actions/idEventLogs";
 
 type EventLogConfigProps = {
   startId?: number;
@@ -18,19 +18,30 @@ export function useIdEventLogs({ startId = 1, interval = 1000 }: EventLogConfigP
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentId(prev => prev + 1);
-    }, interval); // Run every 60 seconds (1 minute)
+    }, interval); // Run every second
 
     return () => clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Use TanStack Query with the server action directly
-  const { data, isLoading, error, refetch } = useQuery({
+  // fetch machine data
+  const { data: machineData } = useQuery({
+    queryKey: ['idEventLogs'],
+    queryFn: () => fetchMachine("TMAR-K1508C--03166"),
+    refetchOnWindowFocus: false,
+  });
+
+  // fetch logs
+  const { data: eventLogs, isLoading, error, refetch } = useQuery({
     queryKey: ['idEventLogs', currentId],
-    queryFn: () => fetchMachinesWithEventLogs(currentId),
+    queryFn: () => fetchEventLogs(currentId, "TMAR-K1508C--03166"),
     refetchInterval: interval, // Refetch every minute
     refetchOnWindowFocus: false,
   });
+
+  if (!isLoading) {
+    console.log("eventLogs", eventLogs);
+  }
 
   // Reset time range to the specific starting date
   const resetTimeRange = () => {
@@ -39,7 +50,8 @@ export function useIdEventLogs({ startId = 1, interval = 1000 }: EventLogConfigP
 
 
   return {
-    machineLogs: data?.data,
+    machineData: machineData?.data,
+    eventLogs: eventLogs?.data,
     isLoading,
     error,
     refetch,

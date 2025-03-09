@@ -123,7 +123,7 @@ export default function Speedometer({ status, headCount, totalStitchCount, goal,
           </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Performance:</span>
-            <span className={`font-medium ${isPerformanceLow && status === "running" ? "text-orange-500" : "text-green-500"}`}>
+            <span className="font-medium">
               {performancePercentage.toFixed(1)}%
             </span>
           </div>

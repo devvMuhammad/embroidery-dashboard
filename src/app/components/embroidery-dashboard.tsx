@@ -1,118 +1,88 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import OrdersTable from "./orders-table"
-import { useIdEventLogs } from "@/hooks/useIdEventLogs";
-import Speedometer from "./speedometer";
-
-// Define types for machine state
-type MachineStatus = "start" | "running" | "stopped";
-type MachineState = {
-  status: MachineStatus;
-  totalStitchCount: number;
-  operator: string;
-  machineName: string;
-  goal: number;
-  headCount: number;
-  lastUpdateTime: Date;
-};
+import { useEventLogs } from "@/hooks/useEventLogs";
+import MachineCard from "./machine"
 
 export default function EmbroideryDashboard() {
-  const { machineLogs, isLoading } = useIdEventLogs({ interval: 10000 });
-  const [machineState, setMachineState] = useState<MachineState>({
-    status: "stopped",
-    totalStitchCount: 0,
-    operator: "Muhammad Khan",
-    machineName: "Emb Machine 9",
-    goal: 0,
-    headCount: 12,
-    lastUpdateTime: new Date(),
-  });
+  const { machines, isLoading, eventLogsByMachine, currentTimeRange } = useEventLogs({ interval: 1000 });
+  const [selectedView, setSelectedView] = useState<"dashboard" | "details">("dashboard");
 
-
-  useEffect(() => {
-    if (machineLogs && !isLoading) {
-      processEventLogs(machineLogs);
-    }
-  }, [machineLogs, isLoading]);
-
-  // Update goal every minute based on Formula A
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setMachineState(prevState => ({
-        ...prevState,
-        goal: prevState.headCount * 339, // Formula A: headCount * 339 per minute
-        lastUpdateTime: new Date()
-      }));
-    }, 60000); // every minute
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function processEventLogs(newEventLogs: any) {
-    if (!Array.isArray(newEventLogs) || newEventLogs.length === 0) return;
-
-    // For simplicity, let's focus on the latest log
-    const latestLog = newEventLogs[newEventLogs.length - 1];
-
-    setMachineState(prevState => {
-      let newStatus = prevState.status;
-      let newStitchCount = prevState.totalStitchCount;
-
-      // Process based on event type
-      if (latestLog.eventType === 'sewing-start') {
-        if (newStitchCount < 0.9 * prevState.goal) {
-          newStatus = "running";
-        } else {
-          newStatus = "start";
-        }
-      } else if (latestLog.eventType === 'design-complete') {
-        // Formula B: Add completed stitches to total
-        newStitchCount += (latestLog.numStitches || 0) * prevState.headCount;
-        newStatus = "stopped"
-      }
-      else {
-        // Any other event
-        newStatus = "stopped";
-      }
-
-      return {
-        ...prevState,
-        status: newStatus,
-        totalStitchCount: newStitchCount,
-      };
-    });
+  if (isLoading) {
+    return <div>Loading...</div>
   }
 
   return (
     <div className="py-8 px-4">
       <header className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Embroidery Production Dashboard</h1>
-        <p className="text-muted-foreground mt-2">Real-time monitoring of machine performance and order status</p>
+        <p className="text-muted-foreground mt-2">
+          Real-time monitoring of machine performance and order status
+        </p>
+        <div className="mt-4 flex items-center gap-2">
+          <div className="text-sm text-muted-foreground">
+            Displaying data from {currentTimeRange.startTime.toLocaleTimeString()} to {currentTimeRange.endTime.toLocaleTimeString()}
+          </div>
+          <div className="flex">
+            <button
+              onClick={() => setSelectedView("dashboard")}
+              className={`px-3 py-1 text-sm rounded-l-md ${selectedView === 'dashboard' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}
+            >
+              Dashboard
+            </button>
+            <button
+              onClick={() => setSelectedView("details")}
+              className={`px-3 py-1 text-sm rounded-r-md ${selectedView === 'details' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}
+            >
+              Raw Data
+            </button>
+          </div>
+        </div>
       </header>
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-4">Machine Status</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <Speedometer
-            status={machineState.status}
-            operator={machineLogs?.operator as string | null}
-            totalStitchCount={machineState.totalStitchCount}
-            machineName={machineLogs?.machineName as string}
-            goal={machineState.goal}
-            headCount={machineState.headCount}
-          />
-        </div>
-      </section>
-      <pre>{JSON.stringify(machineLogs, null, 2)}</pre>
 
-      <section>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold">Orders Info</h2>
-          <p className="text-sm text-muted-foreground">Sorted by due date</p>
-        </div>
-        <OrdersTable />
-      </section>
+      {selectedView === "dashboard" ? (
+        <>
+          <section className="mb-8">
+            <h2 className="text-xl font-semibold mb-4">Machine Status</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {machines.map(machine => (
+                <MachineCard
+                  key={machine.machineName}
+                  machineData={machine}
+                  eventLogs={eventLogsByMachine[machine.machineName] || []}
+                />
+              ))
+              }
+            </div>
+          </section>
+
+          <section>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold">Orders Info</h2>
+              <p className="text-sm text-muted-foreground">Sorted by due date</p>
+            </div>
+            <OrdersTable />
+          </section>
+        </>
+      ) : (
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-4">Raw Data</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div>
+              <h3 className="text-lg font-medium mb-2">Machines</h3>
+              <pre className="bg-muted p-4 rounded-md overflow-auto max-h-96">
+                {JSON.stringify(machines, null, 2)}
+              </pre>
+            </div>
+            <div>
+              <h3 className="text-lg font-medium mb-2">Event Logs</h3>
+              <pre className="bg-muted p-4 rounded-md overflow-auto max-h-96">
+                {JSON.stringify(eventLogsByMachine, null, 2)}
+              </pre>
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   )
 }
-
