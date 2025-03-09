@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
@@ -12,21 +11,24 @@ const formatStitchCount = (count: number) => {
   return count.toString()
 }
 
+type SpeedometerProps = {
+  status: "start" | "running" | "stopped",
+  totalStitchCount: number,
+  operator: string,
+  machineName: string,
+  goal: number,
+  headCount: number,
+}
+
 // Speedometer component with different states
-export default function Speedometer({
-  value = 0,
-  threshold = 500,
-  operator = "John Doe",
-  machine = "1",
-  head = "8",
-  designNumber = "D-1234",
-  stitchCount = 0,
-}) {
+export default function Speedometer({ status, headCount, totalStitchCount, goal, operator, machineName }: SpeedometerProps) {
   const [isBlinking, setIsBlinking] = useState(false)
+
+
 
   useEffect(() => {
     // Set blinking effect for zero value
-    if (value === 0) {
+    if (status === "stopped") {
       const interval = setInterval(() => {
         setIsBlinking((prev) => !prev)
       }, 500)
@@ -34,26 +36,26 @@ export default function Speedometer({
     } else {
       setIsBlinking(false)
     }
-  }, [value])
+  }, [status])
 
   // Determine color based on value
   const getColor = () => {
-    if (value === 0) {
+    if (status === "stopped") {
       return isBlinking ? "transparent" : "rgb(239, 68, 68)"
     }
-    return value < threshold ? "rgb(239, 68, 68)" : "rgb(34, 197, 94)"
+    return totalStitchCount < goal ? "rgb(239, 68, 68)" : "rgb(34, 197, 94)"
   }
 
   // Determine status text and style
   const getStatus = () => {
-    if (value === 0) {
+    if (status === "stopped") {
       return {
         text: "Stopped Working",
         color: "text-red-500",
         blinking: isBlinking ? "opacity-50" : "opacity-100",
         state: "Stopped"
       }
-    } else if (value < threshold) {
+    } else if (totalStitchCount < goal) {
       return {
         text: "Low Performance",
         color: "text-red-500",
@@ -70,17 +72,17 @@ export default function Speedometer({
     }
   }
 
-  const status = getStatus()
-  const formattedStitchCount = formatStitchCount(stitchCount)
+  const statusToDisplay = getStatus()
+  const formattedStitchCount = formatStitchCount(totalStitchCount)
 
   return (
     <Card className="h-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg font-medium flex items-center justify-between">
-          <span>Machine {machine} - {head} Head</span>
-          <span className={`text-sm flex items-center ${status.color} ${status.blinking} transition-opacity duration-300`}>
+          <span>Machine {machineName}</span>
+          <span className={`text-sm flex items-center ${statusToDisplay.color} ${statusToDisplay.blinking} transition-opacity duration-300`}>
             <span className="inline-block w-2 h-2 rounded-full bg-current mr-2"></span>
-            {status.text}
+            {statusToDisplay.text}
           </span>
         </CardTitle>
       </CardHeader>
@@ -100,7 +102,7 @@ export default function Speedometer({
               {formattedStitchCount}
             </text>
             <text x="50" y="60" textAnchor="middle" className="text-xs fill-foreground">
-              {status.state}
+              {status}
             </text>
           </svg>
         </div>
@@ -110,13 +112,13 @@ export default function Speedometer({
             <span className="font-medium">{operator}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Current Speed:</span>
-            <span className="font-medium">{value} SPM</span>
+            <span className="text-muted-foreground">Head Count:</span>
+            <span className="font-medium">{headCount}</span>
           </div>
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <span className="text-muted-foreground">Design Number:</span>
             <span className="font-medium">{designNumber}</span>
-          </div>
+          </div> */}
         </div>
       </CardContent>
     </Card>
