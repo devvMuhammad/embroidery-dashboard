@@ -39,7 +39,7 @@ export function useIdEventLogs({ startId = 1, interval = 2000 }: EventLogConfigP
 
 
   return {
-    machineLogs: data?.data || [],
+    machineLogs: data?.data,
     isLoading,
     error,
     refetch,

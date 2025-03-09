@@ -21,9 +21,7 @@ export default function Machines() {
         machineName="Emb Machine 9"
         goal={5000}
         headCount={12} />
-      {/* {speedometersData.map((data, index) => (
-        <Speedometer key={index} {...data} threshold={500} />
-      ))} */}
+
     </div>
   </section>
 
