@@ -29,7 +29,7 @@ export async function fetchMachinesWithEventLogs(eventLogId: number) {
       machineName: machines.name,
       operator: machines.tajimaConnectUsername,
       headCount: machines.numberOfHeads,
-    }).from(machines).where(eq(machines.name, "TMAR-K1508C--03166"));
+    }).from(machines);
 
     // For each machine, fetch its related event logs
     const machinesWithLogs = await Promise.all(
@@ -57,7 +57,9 @@ export async function fetchMachinesWithEventLogs(eventLogId: number) {
       })
     );
 
-    return { data: machinesWithLogs[0] };
+    console.log(machinesWithLogs)
+
+    return { data: machinesWithLogs };
   } catch (error) {
     console.error("Error fetching machines with event logs:", error);
     return { error: "Error fetching machines with event logs" };

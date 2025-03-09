@@ -10,15 +10,14 @@ type EventLogConfigProps = {
 };
 
 export function useIdEventLogs({ startId = 1, interval = 1000 }: EventLogConfigProps) {
-
   // Simplified state - store both times as formatted strings
   const [currentId, setCurrentId] = useState(startId);
 
-  // Update time range every minute
+  // Update time range every interval
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentId(prev => prev + 1);
-    }, interval); // Run every 60 seconds (1 minute)
+    }, interval);
 
     return () => clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -28,7 +27,7 @@ export function useIdEventLogs({ startId = 1, interval = 1000 }: EventLogConfigP
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ['idEventLogs', currentId],
     queryFn: () => fetchMachinesWithEventLogs(currentId),
-    refetchInterval: interval, // Refetch every minute
+    refetchInterval: interval,
     refetchOnWindowFocus: false,
   });
 
@@ -37,9 +36,8 @@ export function useIdEventLogs({ startId = 1, interval = 1000 }: EventLogConfigP
     setCurrentId(startId);
   };
 
-
   return {
-    machineLogs: data?.data,
+    machineLogs: data?.data, // This is now an array of machines
     isLoading,
     error,
     refetch,
