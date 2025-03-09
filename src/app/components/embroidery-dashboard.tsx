@@ -5,6 +5,8 @@ import OrdersTable from "./orders-table"
 
 
 export default function EmbroideryDashboard() {
+
+
   return (
     <div className="py-8 px-4">
       <header className="mb-8">
