@@ -9,7 +9,7 @@ type EventLogConfigProps = {
   interval?: number;
 };
 
-export function useIdEventLogs({ startId = 1, interval = 2000 }: EventLogConfigProps) {
+export function useIdEventLogs({ startId = 1, interval = 1000 }: EventLogConfigProps) {
 
   // Simplified state - store both times as formatted strings
   const [currentId, setCurrentId] = useState(startId);

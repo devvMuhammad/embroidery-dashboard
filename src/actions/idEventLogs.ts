@@ -35,7 +35,13 @@ export async function fetchMachinesWithEventLogs(eventLogId: number) {
     const machinesWithLogs = await Promise.all(
       machinesList.map(async (machine) => {
         const logs = await db
-          .select()
+          .select({
+            eventLogId: eventlogs.eventLogId,
+            eventType: eventlogs.eventType,
+            machineName: eventlogs.machineName,
+            numStiches: eventlogs.numStitches,
+            eventDateTime: eventlogs.eventDateTime,
+          })
           .from(eventlogs)
           .where(
             and(
