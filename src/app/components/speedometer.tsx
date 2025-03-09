@@ -81,7 +81,7 @@ export default function Speedometer({ status, headCount, totalStitchCount, goal,
     <Card className="h-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg font-medium flex items-center justify-between">
-          <span>Machine {machineName}</span>
+          <span>{machineName}</span>
           <span className={`text-sm flex items-center ${statusToDisplay.color} ${statusToDisplay.blinking} transition-opacity duration-300`}>
             <span className="inline-block w-2 h-2 rounded-full bg-current mr-2"></span>
             {statusToDisplay.text}
@@ -100,10 +100,10 @@ export default function Speedometer({ status, headCount, totalStitchCount, goal,
               strokeWidth="5"
               className="transition-colors duration-300"
             />
-            <text x="50" y="45" textAnchor="middle" className="font-bold fill-foreground">
+            <text x="50" y="45" textAnchor="middle" className="text-sm font-bold fill-foreground">
               {statusText}
             </text>
-            <text x="50" y="60" textAnchor="middle" className="text-xs fill-foreground">
+            <text x="50" y="62" textAnchor="middle" className="text-xs fill-foreground">
               {formattedStitchCount}
             </text>
           </svg>

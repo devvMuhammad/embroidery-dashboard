@@ -28,10 +28,6 @@ export default function EmbroideryDashboard() {
     lastUpdateTime: new Date(),
   });
 
-  // // Process incoming event logs
-  // if (machineLogs && !isLoading) {
-  //   processEventLogs(machineLogs.eventLogs || []);
-  // }
 
   useEffect(() => {
     if (machineLogs && !isLoading) {
@@ -101,7 +97,7 @@ export default function EmbroideryDashboard() {
             status={machineState.status}
             operator={machineLogs?.operator as string | null}
             totalStitchCount={machineState.totalStitchCount}
-            machineName={machineState.machineName}
+            machineName={machineLogs?.machineName as string}
             goal={machineState.goal}
             headCount={machineState.headCount}
           />
