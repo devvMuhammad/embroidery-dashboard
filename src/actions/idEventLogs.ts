@@ -1,8 +1,7 @@
 "use server";
 import { db } from "@/db";
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { eventlogs, machines } from "../../drizzle/schema";
-import { formatDateForDatabase } from "@/lib/utils";
 
 // Accept strings rather than Date objects to avoid timezone issues
 export async function fetchLogById(eventLogId: number) {
@@ -42,70 +41,7 @@ export async function fetchMachine(machineName: string) {
   }
 }
 
-export async function fetchAllMachines() {
-  try {
-    // First fetch all machines
-    const allMachines = await db
-      .select({
-        machineName: machines.name,
-        operator: machines.tajimaConnectUsername,
-        headCount: machines.numberOfHeads,
-      })
-      .from(machines);
 
-    // For each machine, calculate the initial stitch count
-    const machinesWithInitialStitchCount = await Promise.all(
-      allMachines.map(async (machine) => {
-        // Get the current date at midnight to fetch all logs for today
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const todayString = formatDateForDatabase(today);
-
-        // Get tomorrow at midnight
-        const tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const tomorrowString = formatDateForDatabase(tomorrow);
-
-        // Calculate minutes elapsed since start of day
-        const now = new Date();
-        const minutesElapsedToday = (now.getTime() - today.getTime()) / (1000 * 60);
-
-        // Fetch all design-complete events for this machine today
-        const completedDesigns = await db
-          .select({
-            numStiches: eventlogs.numStitches,
-          })
-          .from(eventlogs)
-          .where(
-            and(
-              eq(eventlogs.machineName, machine.machineName),
-              eq(eventlogs.eventType, "design-complete"),
-              sql`${eventlogs.eventDateTime} >= ${todayString}`,
-              sql`${eventlogs.eventDateTime} < ${tomorrowString}`
-            )
-          );
-
-        // Calculate the initial stitch count based on completed designs
-        const initialTotalStitchCount = completedDesigns.reduce((total, log) => {
-          return total + ((log.numStiches || 0) * (machine.headCount || 1));
-        }, 0);
-
-        const dailyGoal = 339 * minutesElapsedToday;
-
-        return {
-          ...machine,
-          initialTotalStitchCount,
-          dailyGoal
-        };
-      })
-    );
-
-    return { data: machinesWithInitialStitchCount };
-  } catch (error) {
-    console.error("Error fetching machines:", error);
-    return { error: "Error fetching machines" };
-  }
-}
 
 export async function fetchEventLogs(eventLogId: number, machineName: string) {
   try {

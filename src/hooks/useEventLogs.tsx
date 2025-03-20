@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchLogs } from "@/app/test/action";
-import { fetchAllMachines } from "@/actions/idEventLogs";
+import { fetchAllMachines, fetchLogs } from "@/actions/logs";
 
 // Function to format date objects to strings in the correct format
 function formatDateForDatabase(date: Date): string {

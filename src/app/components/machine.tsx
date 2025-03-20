@@ -65,6 +65,7 @@ export default function MachineCard({ machineData, eventLogs }: MachineCardProps
       if (machineData) {
         setMachineState(prevState => ({
           ...prevState,
+          goal: prevState.goal + (machineData.headCount || 0) * 339,
           lastUpdateTime: new Date()
         }));
       }
